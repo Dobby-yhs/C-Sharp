@@ -31,17 +31,50 @@ namespace FloatConversion
             WriteLine("3.141592653589793238 == m : {0}", 3.141592653589793238 == m);
                 // 3.141592653589793228 == m : False
 
-            // 부동 소수점에서의 오버플로우와 언더플로우
-            float largeValue = 3.4e38f;
-            float overflowResult = largeValue * 2.0f;
-            WriteLine("Result : {0}", overflowResult);
-                // 오버플로우 발생 -> Result : Infinity
+            //// 부동 소수점에서의 오버플로우와 언더플로우
+            float maxSValue = 3.4e38f;
+            float overflowMaxSResult = maxSValue * 2.0f;
+            WriteLine("Result : {0}", overflowMaxSResult);
+            // float의 양수 최대값에서 오버플로우 발생 -> Result : Infinity
 
-            float smallValue = 1.4e-45f;
-            float underflowResult = smallValue / 10.0f;
-            WriteLine("Result : {0}", underflowResult);
-                // 언더 플로우 발생 -> Result : 0
-            
+            float minSValue = 1.4e-45f;
+            float underflowMinSResult = minSValue / 10.0f;
+            WriteLine("Result : {0}", underflowMinSResult);
+            // float의 양수 최소값에서 언더 플로우 발생 -> Result : 0
+
+            float maxUsValue = -3.4028235E+38f;
+            float underflowMaxUsResult = maxUsValue - 1E+38f;
+            WriteLine("Result : {0}", underflowMaxUsResult);
+            // float의 음수 최대값에서 오버 플로우 발생 -> Result : -Infinity
+
+            float minUsValue = 1.4e-45f;
+            float underflowMinUsResult = minUsValue / 10.0f;
+            WriteLine("Result : {0}", underflowMinUsResult);
+            // float의 음수 최소값에서 언더 플로우 발생 -> Result : 0
+
+
+
+            byte n1 = 255;
+            byte m1 = 0;
+
+            unchecked
+            {
+                n1++;  // overflow
+                m1--;  // underflow
+            }
+            WriteLine("overflow : {0}", n1);
+            WriteLine("underflow : {0}", m1);
+
+
+            byte a1 = 255;
+            byte b1 = 0;
+            checked
+            {
+                a1++;  // overflow
+                b1--;  // underflow
+            }
+            WriteLine("overflow : {0}", a1);
+            WriteLine("underflow : {0}", b1);
         }
     }
 }
