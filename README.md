@@ -22,3 +22,22 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/6*
+
+### Day 3
+- 형 변환(타입 캐스팅)
+- 형 변환
+	- 크기가 서로 다른 부동 소수점 형식 사이의 변환
+	- 문자열과 숫자
+- Nullable
+- var
+- 전역변수
+- 문자열
+	- 탐색 메서드
+	- 변형 메서드
+	- 분할 메서드
+- 문자열의 서식
+	- Format() 메서드
+	- 문자열 보간
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/7*
