@@ -41,3 +41,13 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/7*
+
+### Day 4
+- 삼항 연산자
+- null 조건부 연산자
+- 비트 연산자
+- null 병합 연산자
+- 연산자의 우선 순위
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/11*
