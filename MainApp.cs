@@ -1,27 +1,40 @@
 ﻿using System;
-using static System.Console;
 
-namespace Switch
+namespace Goto
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            int input = Convert.ToInt32(Console.ReadLine());
+            Console.Write("종료 조건(숫자)을 입력하세요. : ");
 
-            // 1의 자리를 버립니다.  예) 92 -> 90, 87 -> 80
-            int score = (int)(Math.Truncate(input / 10.0) * 10);
+            String input = Console.ReadLine();
 
-            string grade = score switch
+            int input_number = Convert.ToInt32(input);
+
+            int exit_number = 0;
+
+            for (int i = 0; i < 2; i++)
             {
-                90 => "A",
-                80 => "B",
-                70 => "C",
-                60 => "D",
-                _  => "F"
-            };
+                for (int j = 0; j < 2; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        if (exit_number++ == input_number)
+                            goto EXIT_FOR;    // 조건이 참이면 EXIT_FOR 레이블로 이동합니다.
 
-            WriteLine($"{grade}");
+                        Console.WriteLine(exit_number);
+                    }
+                }
+            }
+
+            goto EXIT_PROGRAM;    // 위의 goto문이 실행되지 않으면, 해당 goto문에 따라 EXIT_PROGRAM 레이블로 이동합니다.
+
+        EXIT_FOR:
+            Console.WriteLine("\nExit nested for...");
+
+        EXIT_PROGRAM:
+            Console.WriteLine("Exit program...");
         }
     }
 }
