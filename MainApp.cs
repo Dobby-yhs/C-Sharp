@@ -7,32 +7,21 @@ namespace Switch
     {
         static void Main(string[] args)
         {
-            object obj = null;
+            int input = Convert.ToInt32(Console.ReadLine());
 
-            for (int k = 0; k < 3; ++k)
+            // 1의 자리를 버립니다.  예) 92 -> 90, 87 -> 80
+            int score = (int)(Math.Truncate(input / 10.0) * 10);
+
+            string grade = score switch
             {
-                string s = ReadLine();
+                90 => "A",
+                80 => "B",
+                70 => "C",
+                60 => "D",
+                _  => "F"
+            };
 
-                if (int.TryParse(s, out int out_i))
-                    obj = out_i;
-                else if (float.TryParse(s, out float out_f))
-                    obj = out_f;
-                else
-                    obj = s;
-
-                switch (obj)
-                {
-                    case int i:
-                        WriteLine($"{i}는 int 형식입니다.\n");
-                        break;
-                    case float f:
-                        WriteLine($"{f}는 float 형식입니다.\n");
-                        break;
-                    default:
-                        WriteLine($"{obj}(은)는 모르는 형식입니다.\n");
-                        break;
-                }
-            }
+            WriteLine($"{grade}");
         }
     }
 }
