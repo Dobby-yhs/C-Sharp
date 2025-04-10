@@ -1,40 +1,26 @@
 ﻿using System;
+using static System.Console;
 
-namespace Goto
+namespace Practice_No3
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Console.Write("종료 조건(숫자)을 입력하세요. : ");
+            int i = 1; // 행 번호
 
-            String input = Console.ReadLine();
-
-            int input_number = Convert.ToInt32(input);
-
-            int exit_number = 0;
-
-            for (int i = 0; i < 2; i++)
+            do
             {
-                for (int j = 0; j < 2; j++)
+                int j = 1; // 내부 반복을 위한 변수 초기화
+                do
                 {
-                    for (int k = 0; k < 3; k++)
-                    {
-                        if (exit_number++ == input_number)
-                            goto EXIT_FOR;    // 조건이 참이면 EXIT_FOR 레이블로 이동합니다.
+                    Console.Write("*"); // 별 출력
+                    j++; // 내부 반복 변수 증가
+                } while (j <= i); // 현재 행 수에 따라 반복
 
-                        Console.WriteLine(exit_number);
-                    }
-                }
-            }
-
-            goto EXIT_PROGRAM;    // 위의 goto문이 실행되지 않으면, 해당 goto문에 따라 EXIT_PROGRAM 레이블로 이동합니다.
-
-        EXIT_FOR:
-            Console.WriteLine("\nExit nested for...");
-
-        EXIT_PROGRAM:
-            Console.WriteLine("Exit program...");
+                Console.WriteLine(); // 다음 행으로 이동
+                i++; // 행 번호 증가
+            } while (i <= 5); // 5행까지 반복
         }
     }
 }
