@@ -61,3 +61,20 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/15*
+
+### Day 6
+- 메소드
+- 매개변수
+	- 참조에 의한 매개변수 전달
+	- C#의 포인터
+- 참조 반환값
+- 출력 전용 매개변수 out
+- 메소드 오버로딩
+- 가변 개수의 인수
+- 명명된 인수
+- 선택적 인수
+- 메소드 오버로딩 vs 선택적 매개변수
+- 로컬 함수
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/17*
