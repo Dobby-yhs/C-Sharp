@@ -1,22 +1,20 @@
 ﻿using System;
 using static System.Console;
 
-namespace SwapBy
+namespace RefReturn
 {
-    class Swap
+    class Product
     {
-        public static void RefSwap(ref int a, ref int b)
+        private int price = 100;
+
+        public ref int GetPrice()
         {
-            int temp = b;
-            b = a;
-            a = temp;
+            return ref price;
         }
 
-        public static unsafe void PointerSwap(int* a, int* b)
+        public void PrintPrice()
         {
-            int temp = *b;
-            *b = *a;
-            *a = temp;
+            WriteLine($"Price : {price}");
         }
     }
 
@@ -24,19 +22,20 @@ namespace SwapBy
     {
         static void Main(string[] args)
         {
-            int x = 3;
-            int y = 4;
+            Product carrot = new Product();
+            ref int ref_local_price = ref carrot.GetPrice();  
+            // ref_local_price를 수정하면 carrot.price의 내용도 바뀝니다.
+            int normal_local_price = carrot.GetPrice();
 
-            Swap.RefSwap(ref x, ref y);
+            carrot.PrintPrice();
+            WriteLine($"Ref Local Price : {ref_local_price}");
+            WriteLine($"Normal Local Price : {normal_local_price}");
 
-            WriteLine($"x : {x}, y : {y}");
+            ref_local_price = 200;
 
-            unsafe 
-            {
-                Swap.PointerSwap(&x, &y);
-            }
-
-            WriteLine($"x : {x}, y : {y}");
+            carrot.PrintPrice();
+            WriteLine($"Ref Local Price : {ref_local_price}");
+            WriteLine($"Normal Local Price : {normal_local_price}");
         }
     }
 }
