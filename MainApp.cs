@@ -1,20 +1,20 @@
 ﻿using System;
 using static System.Console;
 
-namespace RefReturn
+namespace DivideRefOut
 {
-    class Product
+    class Divide
     {
-        private int price = 100;
-
-        public ref int GetPrice()
+        public static void DivideRef(int a, int b, ref int quotient, ref int remainder)
         {
-            return ref price;
+            quotient = a / b;
+            remainder = a % b;
         }
 
-        public void PrintPrice()
+        public static void DivideOut(int a, int b, out int quotient, out int remainder)
         {
-            WriteLine($"Price : {price}");
+            quotient = a / b;
+            remainder = a % b;
         }
     }
 
@@ -22,20 +22,17 @@ namespace RefReturn
     {
         static void Main(string[] args)
         {
-            Product carrot = new Product();
-            ref int ref_local_price = ref carrot.GetPrice();  
-            // ref_local_price를 수정하면 carrot.price의 내용도 바뀝니다.
-            int normal_local_price = carrot.GetPrice();
+            int a = 20, b = 3, c = 0, d = 0;
 
-            carrot.PrintPrice();
-            WriteLine($"Ref Local Price : {ref_local_price}");
-            WriteLine($"Normal Local Price : {normal_local_price}");
+            Divide.DivideRef(a, b, ref c, ref d);
 
-            ref_local_price = 200;
+            Console.WriteLine("Quotient : {0}, Remainder {1}", c, d);
 
-            carrot.PrintPrice();
-            WriteLine($"Ref Local Price : {ref_local_price}");
-            WriteLine($"Normal Local Price : {normal_local_price}");
+            int x = 20, y = 3, n, m;
+
+            Divide.DivideOut(x, y, out n, out m);
+
+            Console.WriteLine("Quotient : {0}, Remainder {1}", n, m);
         }
     }
 }
