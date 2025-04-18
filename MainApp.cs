@@ -1,39 +1,53 @@
 ﻿using System;
-using static System.Console;
 
-class Global
+namespace DeepCopy
 {
-    public static int Count = 0;
-}
-
-class ClassA
-{
-    public static void PlusA()
+    class MyClass
     {
-        Global.Count++;
+        public int MyField1;
+        public int MyField2;
+
+        public MyClass DeepCopy()  // 객체를 힙에 새로 할당해 자신의 멤버를 일일이 복사해 넣습니다.
+        {
+            MyClass newCopy = new MyClass();
+            newCopy.MyField1 = this.MyField1;
+            newCopy.MyField2 = this.MyField2;
+
+            return newCopy;
+        }
     }
-}
 
-class ClassB
-{
-    public static void PlusB()
+    class MainApp
     {
-        Global.Count++;
-    }
-}
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Shallow Copy");
 
-class MainApp
-{
-    static void Main()
-    {
-        WriteLine($"Global.Count : {Global.Count}");
-        // 인스턴스를 생성하지 않고 클래스의 이름을 통해 필드에 직접 접근합니다.
+            {
+                MyClass source = new MyClass();
+                source.MyField1 = 10;
+                source.MyField2 = 20;
 
-        ClassA.PlusA();  // 인스턴스를 생성하지 않고 클래스의 메소드에 직접 접근합니다.
-        ClassA.PlusA();  // ""
-        ClassB.PlusB();  // ""
-        ClassB.PlusB();  // ""
+                MyClass target = source;  // 얕은 복사
+                target.MyField2 = 30;
 
-        WriteLine($"Global.Count : {Global.Count}");
+                Console.WriteLine($"{source.MyField1}, {source.MyField2}");
+                Console.WriteLine($"{target.MyField1}, {target.MyField2}");
+            }
+
+            Console.WriteLine("\nDeep Copy");
+
+            {
+                MyClass source = new MyClass();
+                source.MyField1 = 10;
+                source.MyField2 = 20;
+
+                MyClass target = source.DeepCopy();
+                target.MyField2 = 30;
+
+                Console.WriteLine($"{source.MyField1}, {source.MyField2}");
+                Console.WriteLine($"{target.MyField1}, {target.MyField2}");
+            }
+        }
     }
 }
