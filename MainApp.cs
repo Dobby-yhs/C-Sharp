@@ -1,19 +1,30 @@
 ﻿using System;
 
-namespace DeepCopy
+namespace This
 {
-    class MyClass
+    class Employee
     {
-        public int MyField1;
-        public int MyField2;
+        private string Name;
+        private string Position;
 
-        public MyClass DeepCopy()  // 객체를 힙에 새로 할당해 자신의 멤버를 일일이 복사해 넣습니다.
+        public void SetName(string Name)
         {
-            MyClass newCopy = new MyClass();
-            newCopy.MyField1 = this.MyField1;
-            newCopy.MyField2 = this.MyField2;
+            this.Name = Name;
+        }
 
-            return newCopy;
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public void SetPosition(string Position)
+        {
+            this.Position = Position;
+        }
+
+        public string GetPosition()
+        {
+            return this.Position;
         }
     }
 
@@ -21,33 +32,15 @@ namespace DeepCopy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Shallow Copy");
+            Employee pooh = new Employee();
+            pooh.SetName("Pooh");
+            pooh.SetPosition("Waiter");
+            Console.WriteLine($"{pooh.GetName()}, {pooh.GetPosition()}");
 
-            {
-                MyClass source = new MyClass();
-                source.MyField1 = 10;
-                source.MyField2 = 20;
-
-                MyClass target = source;  // 얕은 복사
-                target.MyField2 = 30;
-
-                Console.WriteLine($"{source.MyField1}, {source.MyField2}");
-                Console.WriteLine($"{target.MyField1}, {target.MyField2}");
-            }
-
-            Console.WriteLine("\nDeep Copy");
-
-            {
-                MyClass source = new MyClass();
-                source.MyField1 = 10;
-                source.MyField2 = 20;
-
-                MyClass target = source.DeepCopy();
-                target.MyField2 = 30;
-
-                Console.WriteLine($"{source.MyField1}, {source.MyField2}");
-                Console.WriteLine($"{target.MyField1}, {target.MyField2}");
-            }
+            Employee tigger = new Employee();
+            tigger.SetName("Tigger");
+            tigger.SetPosition("Cleaner");
+            Console.WriteLine($"{tigger.GetName()}, {tigger.GetPosition()}");
         }
     }
 }
