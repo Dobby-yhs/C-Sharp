@@ -78,3 +78,23 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/17*
+
+### Day 7
+- 객체지향 프로그래밍 (OOP)
+	- 객체
+	- 클래스
+	- 상속
+	- 다형성
+	- 캡슐화
+- 클래스
+	- 필드
+	- 멤버
+	- 클래스의 객체 생성
+- 객체 : 생성자와 종료자
+- 정적 필드와 정적 메소드
+- 얕은 복사와 깊은 복사
+- this 키워드
+- this() 생성자
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/19*
