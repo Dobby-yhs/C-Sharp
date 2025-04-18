@@ -1,38 +1,39 @@
 ﻿using System;
 using static System.Console;
 
-namespace DivideRefOut
+class Global
 {
-    class Divide
-    {
-        public static void DivideRef(int a, int b, ref int quotient, ref int remainder)
-        {
-            quotient = a / b;
-            remainder = a % b;
-        }
+    public static int Count = 0;
+}
 
-        public static void DivideOut(int a, int b, out int quotient, out int remainder)
-        {
-            quotient = a / b;
-            remainder = a % b;
-        }
+class ClassA
+{
+    public static void PlusA()
+    {
+        Global.Count++;
     }
+}
 
-    class MainApp
+class ClassB
+{
+    public static void PlusB()
     {
-        static void Main(string[] args)
-        {
-            int a = 20, b = 3, c = 0, d = 0;
+        Global.Count++;
+    }
+}
 
-            Divide.DivideRef(a, b, ref c, ref d);
+class MainApp
+{
+    static void Main()
+    {
+        WriteLine($"Global.Count : {Global.Count}");
+        // 인스턴스를 생성하지 않고 클래스의 이름을 통해 필드에 직접 접근합니다.
 
-            Console.WriteLine("Quotient : {0}, Remainder {1}", c, d);
+        ClassA.PlusA();  // 인스턴스를 생성하지 않고 클래스의 메소드에 직접 접근합니다.
+        ClassA.PlusA();  // ""
+        ClassB.PlusB();  // ""
+        ClassB.PlusB();  // ""
 
-            int x = 20, y = 3, n, m;
-
-            Divide.DivideOut(x, y, out n, out m);
-
-            Console.WriteLine("Quotient : {0}, Remainder {1}", n, m);
-        }
+        WriteLine($"Global.Count : {Global.Count}");
     }
 }
