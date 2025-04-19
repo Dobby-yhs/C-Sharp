@@ -1,24 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ReadonlyFields
+namespace NestedClass
 {
-    class Configuration
+    class Configruation
     {
-        // readonly를 이용해서 읽기 전용 필드를 선언합니다.
-        private readonly int min;
-        private readonly int max;
-
-        public Configuration(int v1, int v2)
+        List<ItemValue> listConfig = new List<ItemValue>();
+        public void SetConfig(string item, string value)
         {
-            // 읽기 전용 필드는 생성자 안에서만 초기화 가능합니다.
-            min = v1;
-            min = v2;
+            ItemValue iv = new ItemValue();
+            iv.SetValue(this, item, value);
+        }
+        public string GetConfig(string item)
+        {
+            foreach (ItemValue iv in listConfig)
+            {
+                if (iv.GetItem() == item)
+                    return iv.GetValue();
+            }
+            return null;
         }
 
-        public void ChangeMax(int newMax)
+        private class ItemValue
         {
-            // 생성자가 아닌 다른 곳에서 값을 수정하려하면 컴파일 에러가 발생합니다.
-            max = newMax;
+            public string item;
+            public string value;
+            public void SetValue(Configruation config, string item, string value)
+            {
+                this.item = item;
+                this.value = value;
+
+                bool found = false;
+                for (int i = 0; i < config.listConfig.Count; i++)
+                {
+                    if (config.listConfig[i].item == item)
+                    {
+                        config.listConfig[i] = this;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found == false)
+                    config.listConfig.Add(this);
+            }
+
+            public string GetItem()
+            { return item; }
+            public string GetValue()
+            { return value; }
         }
     }
 
@@ -26,7 +56,17 @@ namespace ReadonlyFields
     {
         static void Main(string[] args)
         {
-            Configuration c = new Configuration(100, 10);
+            Configruation config = new Configruation();
+
+            config.SetConfig("Version", "V 5.0");
+            config.SetConfig("Size", "655.324 KB");
+
+            Console.WriteLine(config.GetConfig("Version"));
+            Console.WriteLine(config.GetConfig("Size"));
+
+            config.SetConfig("Version", "V 5.0.1");
+
+            Console.WriteLine(config.GetConfig("Version"));
         }
     }
 }
