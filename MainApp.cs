@@ -1,24 +1,28 @@
 ﻿using System;
 
-namespace AccessModifier
+namespace TypeCasting
 {
-    class WaterHeater
+    class Mammal
     {
-        protected int temperature;
-
-        public void SetTemperature(int temperature)
+        public void Nurse()
         {
-            if (temperature < -5 || temperature > 42)
-            {
-                throw new Exception("Out of temperature range");
-            }
-
-            this.temperature = temperature;
+            Console.WriteLine("Nurse()");
         }
+    }
 
-        internal void TurnOnWater()
+    class Dog : Mammal
+    {
+        public void Bark()
         {
-            Console.WriteLine($"Turn on water : {temperature}");
+            Console.WriteLine("Bark()");
+        }
+    }
+
+    class Cat : Mammal
+    {
+        public void Meow()
+        {
+            Console.WriteLine("Meow()");
         }
     }
 
@@ -26,21 +30,34 @@ namespace AccessModifier
     {
         static void Main(string[] args)
         {
-            try
+            Mammal mammal = new Dog();
+            Dog dog;
+
+            if (mammal is Dog)  // is 연산자를 사용하여 타입 검사 수행
             {
-                WaterHeater heater = new WaterHeater();
-                heater.SetTemperature(20);
-                heater.TurnOnWater();
-
-                heater.SetTemperature(-2);
-                heater.TurnOnWater();
-
-                heater.SetTemperature(50);
-                heater.TurnOnWater();
+                dog = (Dog)mammal;  // 명시적 형 변환(casting)으로 Mammal 타입의 mammal 객체를 Dog 타입으로 변환합니다. 
+                                    // 이전에 is 연산자를 통해 mammal이 Dog 타입임을 확인했기 때문에 안전합니다.
+                dog.Bark();
             }
-            catch (Exception e)
+
+            Mammal mammal2 = new Cat();
+
+            Cat cat = mammal2 as Cat;  // as 연산자를 사용하여 형 변환
+            if (cat != null)
             {
-                Console.WriteLine(e.Message);
+                cat.Meow();
+            }
+
+            Cat cat2 = mammal as Cat;  // as 연산자를 사용하여 mammal 객체를 Cat 타입으로 변환 시도합니다. 
+                                       // 만약 변환이 불가능하면 null이 반환됩니다.
+
+            if (cat2 != null)
+            {
+                cat2.Meow();
+            }
+            else
+            {
+                Console.WriteLine("cat2 is not a Cat");
             }
         }
     }
