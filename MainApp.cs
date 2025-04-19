@@ -1,31 +1,20 @@
 ﻿using System;
 
-namespace Overriding
+namespace MethodHiding
 {
-    class ArmorSuite
+    class Base
     {
-        public virtual void Initialize()
+        public void MyMethod()
         {
-            Console.WriteLine("Aromored");
+            Console.WriteLine("Base.MyMethod()");
         }
     }
 
-    class IronMan : ArmorSuite
+    class Derived : Base
     {
-        public override void Initialize()
+        public new void MyMethod()  // new 키워드 사용
         {
-            base.Initialize();
-            Console.WriteLine("Repulsor Rays Armed");
-        }
-    }
-
-    class WarMachine : ArmorSuite
-    {
-        public override void Initialize()
-        {
-            base.Initialize();
-            Console.WriteLine("Double-Barrel Cannons Armed");
-            Console.WriteLine("Micro-Rocket Launcher Armed");
+            Console.WriteLine("Derived.MyMethod()");
         }
     }
 
@@ -33,17 +22,14 @@ namespace Overriding
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Creating ArmorSuite...");
-            ArmorSuite armoursuite = new ArmorSuite();
-            armoursuite.Initialize();
+            Base baseObj = new Base();
+            baseObj.MyMethod();
 
-            Console.WriteLine("\nCreating IronMan...");
-            ArmorSuite ironman = new IronMan();
-            ironman.Initialize();
+            Derived derivedObj = new Derived();
+            derivedObj.MyMethod();
 
-            Console.WriteLine("\nCreating WarMachine...");
-            ArmorSuite warmachine = new WarMachine();
-            warmachine.Initialize();
+            Base baseOrDerived = new Derived();
+            baseOrDerived.MyMethod();
         }
     }
 }
