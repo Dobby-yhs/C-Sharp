@@ -98,3 +98,23 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/19*
+
+### Day 8
+- 접근 한정자 : 은닉성
+- 상속
+- base 키워드
+- sealed 한정자
+- is 연산자
+- as 연산자
+- 오버라이딩과 다형성
+- 메소드 숨기기
+	- 정적 바인딩
+	- 동적 바인딩
+- 오버라이딩 봉인 : sealed 키워드
+- 읽기 전용 필드
+- 중첩 클래스
+- 분할 클래스
+- 확장 메소드
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/21*
