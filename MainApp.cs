@@ -1,30 +1,24 @@
 ﻿using System;
 
-namespace This
+namespace AccessModifier
 {
-    class Employee
+    class WaterHeater
     {
-        private string Name;
-        private string Position;
+        protected int temperature;
 
-        public void SetName(string Name)
+        public void SetTemperature(int temperature)
         {
-            this.Name = Name;
+            if (temperature < -5 || temperature > 42)
+            {
+                throw new Exception("Out of temperature range");
+            }
+
+            this.temperature = temperature;
         }
 
-        public string GetName()
+        internal void TurnOnWater()
         {
-            return Name;
-        }
-
-        public void SetPosition(string Position)
-        {
-            this.Position = Position;
-        }
-
-        public string GetPosition()
-        {
-            return this.Position;
+            Console.WriteLine($"Turn on water : {temperature}");
         }
     }
 
@@ -32,15 +26,22 @@ namespace This
     {
         static void Main(string[] args)
         {
-            Employee pooh = new Employee();
-            pooh.SetName("Pooh");
-            pooh.SetPosition("Waiter");
-            Console.WriteLine($"{pooh.GetName()}, {pooh.GetPosition()}");
+            try
+            {
+                WaterHeater heater = new WaterHeater();
+                heater.SetTemperature(20);
+                heater.TurnOnWater();
 
-            Employee tigger = new Employee();
-            tigger.SetName("Tigger");
-            tigger.SetPosition("Cleaner");
-            Console.WriteLine($"{tigger.GetName()}, {tigger.GetPosition()}");
+                heater.SetTemperature(-2);
+                heater.TurnOnWater();
+
+                heater.SetTemperature(50);
+                heater.TurnOnWater();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
