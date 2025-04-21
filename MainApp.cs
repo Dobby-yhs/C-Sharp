@@ -1,43 +1,35 @@
 ﻿using System;
 
-namespace Structure
+namespace Tuple
 {
-    struct Point3D
-    {
-        public int X;
-        public int Y;
-        public int Z;
-
-        public Point3D(int X, int Y, int Z)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.Z = Z;
-        }
-
-        public override string ToString()  // System.Object 형식의 ToString() 메소드를 오버라이딩
-        {
-            return string.Format($"{X}, {Y}, {Z}");
-        }
-    }
-
     class MainApp
     {
         static void Main(string[] args)
         {
-            Point3D p3d1;  // 선언만으로도 인스턴스가 생성됩니다.
-            p3d1.X = 10;
-            p3d1.Y = 20;
-            p3d1.Z = 40;
+            // 명명되지 않은 튜플
+            var a = ("철수", 10);
+            Console.WriteLine($"{a.Item1}, {a.Item2}");
 
-            Console.WriteLine(p3d1.ToString());
+            // 명명된 튜플
+            var b = (Name : "영수", Age: 20);
+            Console.WriteLine($"{b.Name}, {b.Age}");
 
-            Point3D p3d2 = new Point3D(100, 200, 300);  // 생성자를 이용한 인스턴스 생성도 가능합니다.
-            Point3D p3d3 = p3d2;  // 구조체의 인스턴스를 다른 인스턴스에 할당하면 깊은 복사가 이루어집니다.
-            p3d3.Z = 400;
+            // 분해 1
+            var (name, age) = b;
+            Console.WriteLine($"{name} {age}");
 
-            Console.WriteLine(p3d2.ToString());
-            Console.WriteLine(p3d3.ToString()); 
+            // 분해 2
+            var (name2, age2) = ("민수", 30);
+            Console.WriteLine($"{name2}, {age2}");
+
+            // 분해 3
+            (var name3, var age3) = a;
+            Console.WriteLine($"{name3} {age3}");
+
+            // 명명된 튜플 = 명명되지 않은 튜플
+            b = a;
+            Console.WriteLine($"{b.Name}, {b.Age}");
         }
+         
     }
 }
