@@ -1,46 +1,43 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using MyExtension;  // 확장 메소드를 담는 클래스의 네임스페이스를 사용합니다.
 
-namespace MyExtension
+namespace Structure
 {
-    public static class IntegerExtension
+    struct Point3D
     {
-        public static int Square(this int myInt)
+        public int X;
+        public int Y;
+        public int Z;
+
+        public Point3D(int X, int Y, int Z)
         {
-            return myInt * myInt;
+            this.X = X;
+            this.Y = Y;
+            this.Z = Z;
         }
 
-        public static int Power(this int myInt, int exponent)
+        public override string ToString()  // System.Object 형식의 ToString() 메소드를 오버라이딩
         {
-            int result = myInt;
-            for (int i = 1; i < exponent; i++)
-                result = result * myInt;
-
-            return result;
-        }
-
-        public static string Append(this string str, string input)
-        {
-            str += input;
-
-            return str;
+            return string.Format($"{X}, {Y}, {Z}");
         }
     }
-}
 
-namespace ExtensionMethod
-{
     class MainApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"3^2 : {3.Square()}");
-            Console.WriteLine($"3^4 : {3.Power(4)}");
-            Console.WriteLine($"2^10 : {2.Power(10)}");
+            Point3D p3d1;  // 선언만으로도 인스턴스가 생성됩니다.
+            p3d1.X = 10;
+            p3d1.Y = 20;
+            p3d1.Z = 40;
 
-            string hello = "Hello";
-            Console.WriteLine(hello.Append(", World!"));
+            Console.WriteLine(p3d1.ToString());
+
+            Point3D p3d2 = new Point3D(100, 200, 300);  // 생성자를 이용한 인스턴스 생성도 가능합니다.
+            Point3D p3d3 = p3d2;  // 구조체의 인스턴스를 다른 인스턴스에 할당하면 깊은 복사가 이루어집니다.
+            p3d3.Z = 400;
+
+            Console.WriteLine(p3d2.ToString());
+            Console.WriteLine(p3d3.ToString()); 
         }
     }
 }
