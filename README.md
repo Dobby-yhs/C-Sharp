@@ -118,3 +118,15 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/21*
+
+### Day 9
+- 구조체
+	- 클래스 vs 구조체
+- 변경 불가능 객체
+	- 변경 불가능 구조체
+- 읽기 전용 메소드
+- 튜플
+	- 튜플 분해
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/23*
