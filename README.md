@@ -130,3 +130,13 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/23*
+
+### Day 10
+- 인터페이스
+- 인터페이스 다중 상속
+- 인터페이스 기본 구현 메소드
+- 추상 클래스
+	- 추상 메소드
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/25*
