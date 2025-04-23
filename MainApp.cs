@@ -1,22 +1,28 @@
 ﻿using System;
 
-namespace DefaultImplementation
+namespace AbstractClass
 {
-    interface ILogger
+    abstract class AbstractBase
     {
-        void WriteLog(string message);
-
-        void WriteError(string error)  // 새로운 메소드 추가
+        protected void PrivateMethodA()
         {
-            WriteLog($"Error : {error}");
+            Console.WriteLine("AbstractBase.PrivateMethodA()");
         }
+
+        public void PublicMethodA()
+        {
+            Console.WriteLine("AbstractBase.PublicMethodA()");
+        }
+
+        public abstract void AbstractMethodA();
     }
 
-    class ConsoleLogger : ILogger
+    class Derived : AbstractBase
     {
-        public void WriteLog(string message)
+        public override void AbstractMethodA()
         {
-            Console.WriteLine($"{DateTime.Now.ToLocalTime()}, {message}");
+            Console.WriteLine("Derived.AbstractMethodA()");
+            PrivateMethodA();
         }
     }
 
@@ -24,13 +30,9 @@ namespace DefaultImplementation
     {
         static void Main(string[] args)
         {
-            ILogger logger = new ConsoleLogger();
-            logger.WriteLog("System Up");
-            logger.WriteError("System Fail");
-
-            ConsoleLogger clogger = new ConsoleLogger();
-            clogger.WriteLog("System Up");  // 컴파일 OK
-            // clogger.WriteError("System Fail");  // 컴파일 에러
+            AbstractBase obj = new Derived();
+            obj.AbstractMethodA();
+            obj.PublicMethodA();
         }
     }
 }
