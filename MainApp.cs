@@ -1,35 +1,69 @@
 ﻿using System;
+using System.IO;
 
-namespace Tuple
+namespace Interface
 {
+     // ConsoleLogger와 FileLogger는 ILogger를 상속하며, WriteLog() 메소드를 구현합니다.
+    interface ILogger
+    {
+        void WriteLog(string message);
+    }
+
+    class ConsoleLogger : ILogger
+    {
+        public void WriteLog(string message)
+        {
+            Console.WriteLine("{0} {1}", DateTime.Now.ToLocalTime(), message);
+        }
+    }
+
+    class FileLogger : ILogger
+    {
+        private StreamWriter writer;
+
+        public FileLogger(string path)
+        {
+            writer = File.CreateText(path);
+            writer.AutoFlush = true;
+        }
+
+        public void WriteLog(string message)
+        {
+            writer.WriteLine("{0} {1}", DateTime.Now.ToShortTimeString(), message);
+        }
+    }
+
+    class ClimateMonitor
+    {
+        private ILogger logger;
+
+        public ClimateMonitor(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
+        public void start()
+        {
+            while (true)
+            {
+                Console.Write("온도를 입력해주세요. : ");
+                string temperature = Console.ReadLine();
+                if (temperature == "")
+                    break;
+
+                logger.WriteLog("현재 온도 : " + temperature);
+            }
+        }
+    }
+
     class MainApp
     {
         static void Main(string[] args)
         {
-            // 명명되지 않은 튜플
-            var a = ("철수", 10);
-            Console.WriteLine($"{a.Item1}, {a.Item2}");
+            // monitor 객체는 애플리케이션이 시작된 디렉터리에 MyLog.txt를 만들고 여기에 로그를 남깁니다.
+            ClimateMonitor monitor = new ClimateMonitor(new FileLogger("MyLog.txt"));
 
-            // 명명된 튜플
-            var b = (Name : "영수", Age: 20);
-            Console.WriteLine($"{b.Name}, {b.Age}");
-
-            // 분해 1
-            var (name, age) = b;
-            Console.WriteLine($"{name} {age}");
-
-            // 분해 2
-            var (name2, age2) = ("민수", 30);
-            Console.WriteLine($"{name2}, {age2}");
-
-            // 분해 3
-            (var name3, var age3) = a;
-            Console.WriteLine($"{name3} {age3}");
-
-            // 명명된 튜플 = 명명되지 않은 튜플
-            b = a;
-            Console.WriteLine($"{b.Name}, {b.Age}");
+            monitor.start();
         }
-         
     }
 }
