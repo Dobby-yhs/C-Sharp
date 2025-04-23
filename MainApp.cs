@@ -1,39 +1,43 @@
 ﻿using System;
 
-namespace DerivedInterface
+namespace MultiInterfaceInheritance
 {
-    interface ILogger
+    interface IRunnable
     {
-        void WriteLog(string message);
+        void Run();
     }
 
-    // IFormattableLogger는 ILogger를 상속합니다.
-    interface IFormattableLogger : ILogger
+    interface IFlyable
     {
-        void WriteLog(string format, params Object[] args);
+        void Fly();
     }
 
-    // ConsoleLogger는 IFormattableLogger를 상속합니다.
-    class ConsoleLogger : IFormattableLogger
+    class FlyingCar : IRunnable, IFlyable
     {
-        public void WriteLog(string message)
+        public void Run()
         {
-            Console.WriteLine("{0} {1}", DateTime.Now.ToLocalTime(), message);
+            Console.WriteLine("Run");
         }
 
-        public void WriteLog(string format, params Object[] args)
+        public void Fly()
         {
-            String message = String.Format(format, args);
-            Console.WriteLine("{0} {1}", DateTime.Now.ToLocalTime(), message);
+            Console.WriteLine("Fly");
         }
     }
+
     class MainApp
     {
         static void Main(string[] args)
         {
-            IFormattableLogger logger = new ConsoleLogger();
-            logger.WriteLog("The world is not flat.");
-            logger.WriteLog("{0} + {1} = {2}", 1, 1, 2);
+            FlyingCar car = new FlyingCar();
+            car.Run(); 
+            car.Fly();
+
+            IRunnable runnable = car as IRunnable;
+            runnable.Run();
+
+            IFlyable flyable = car as IFlyable;
+            flyable.Fly();
         }
     }
 }
