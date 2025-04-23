@@ -1,27 +1,22 @@
 ﻿using System;
 
-namespace MultiInterfaceInheritance
+namespace DefaultImplementation
 {
-    interface IRunnable
+    interface ILogger
     {
-        void Run();
-    }
+        void WriteLog(string message);
 
-    interface IFlyable
-    {
-        void Fly();
-    }
-
-    class FlyingCar : IRunnable, IFlyable
-    {
-        public void Run()
+        void WriteError(string error)  // 새로운 메소드 추가
         {
-            Console.WriteLine("Run");
+            WriteLog($"Error : {error}");
         }
+    }
 
-        public void Fly()
+    class ConsoleLogger : ILogger
+    {
+        public void WriteLog(string message)
         {
-            Console.WriteLine("Fly");
+            Console.WriteLine($"{DateTime.Now.ToLocalTime()}, {message}");
         }
     }
 
@@ -29,15 +24,13 @@ namespace MultiInterfaceInheritance
     {
         static void Main(string[] args)
         {
-            FlyingCar car = new FlyingCar();
-            car.Run(); 
-            car.Fly();
+            ILogger logger = new ConsoleLogger();
+            logger.WriteLog("System Up");
+            logger.WriteError("System Fail");
 
-            IRunnable runnable = car as IRunnable;
-            runnable.Run();
-
-            IFlyable flyable = car as IFlyable;
-            flyable.Fly();
+            ConsoleLogger clogger = new ConsoleLogger();
+            clogger.WriteLog("System Up");  // 컴파일 OK
+            // clogger.WriteError("System Fail");  // 컴파일 에러
         }
     }
 }
