@@ -1,30 +1,21 @@
 ﻿using System;
 
-namespace WithExp
+namespace AnonymousType
 {
-    record RTransaction
-    {
-        public string From   { get; init; }
-        public string To     { get; init; }
-        public int    Amount { get; init; }
-
-        public override string ToString()
-        {
-            return $"{From,-10} -> {To,-10} : ${Amount}";
-        }
-    }
-
     class MainApp
     {
         static void Main(string[] args)
         {
-            RTransaction tr1 = new RTransaction { From = "Alice", To = "Bob", Amount = 100 };
-            RTransaction tr2 = tr1 with { To = "Charlie" };
-            RTransaction tr3 = tr2 with { From = "Dave", Amount = 30 };
+            var a = new { Name = "홍길동", Age = 20 };
+            Console.WriteLine($"Name : {a.Name}, Age : {a.Age}");
 
-            Console.WriteLine(tr1);
-            Console.WriteLine(tr2);
-            Console.WriteLine(tr3);
+            var b = new { Subject = "수학", Scroes = new int[] { 90, 80, 70, 60 } };
+
+            Console.Write($"Subject : {b.Subject}, Scores : ");
+            foreach (var score in b.Scroes)
+                Console.Write($"{score} ");
+
+            Console.WriteLine();
         }
     }
 }
