@@ -140,3 +140,20 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/25*
+
+### Day 11
+- 프로퍼티
+- 자동 구현 프로퍼티
+	- 자동 구현 프로퍼티 뒤에서 일어나는 일
+	- ILDASM
+- 프로퍼티와 생성자
+- 초기화 전용 자동 구현 프로퍼티
+- 레코드 형식으로 만드는 불변 객체
+- with을 이용한 레코드 복사
+- 레코드 객체 비교하기
+- 무명 형식
+- 인터페이스의 프로퍼티
+- 추상 클래스의 추상 프로퍼티
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/26*
