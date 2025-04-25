@@ -1,42 +1,26 @@
 ﻿using System;
 
-namespace PropertiesInAbstractClass
-{ 
-    abstract class Product
+namespace EX9_1
+{
+    class NameCard
     {
-        private static int serial = 0;
-        public string SerialID
-        {
-            get { return String.Format("{0:d5}", serial++); }
-        }
+        public int Age { get; set; }
+        public string Name { get; set; }
 
-        abstract public DateTime ProductDate
-        {
-            get;
-            set;
-        }
-    }
-
-    class MyProduct : Product
-    { 
-        public override DateTime ProductDate
-        {
-            get;
-            set;
-        }
     }
 
     class MainApp
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Product product_1 = new MyProduct() { ProductDate = new DateTime(2018, 1, 10) };
+            NameCard MyCard = new NameCard()
+            {
+                Age = 20,
+                Name = "길동"
+            };
 
-            Console.WriteLine("Product : {0}, Product Date : {1}", product_1.SerialID, product_1.ProductDate);
-
-            Product product_2 = new MyProduct() { ProductDate = new DateTime(2018, 2, 3) };
-
-            Console.WriteLine("Product : {0}, Product Date : {1}", product_2.SerialID, product_2.ProductDate);
+            Console.WriteLine("나이 : {0}", MyCard.Age);
+            Console.WriteLine("이름 : {0}", MyCard.Name);
         }
     }
 }
