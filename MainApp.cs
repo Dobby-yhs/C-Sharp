@@ -1,26 +1,14 @@
 ﻿using System;
 
-namespace EX9_1
+namespace DerivedFromArray
 {
-    class NameCard
-    {
-        public int Age { get; set; }
-        public string Name { get; set; }
-
-    }
-
     class MainApp
     {
-        public static void Main()
+        static void Main(string[] args)
         {
-            NameCard MyCard = new NameCard()
-            {
-                Age = 20,
-                Name = "길동"
-            };
-
-            Console.WriteLine("나이 : {0}", MyCard.Age);
-            Console.WriteLine("이름 : {0}", MyCard.Name);
+            int[] array = new int[] { 10, 30, 20, 7, 1 };
+            Console.WriteLine($"Type Of array : {array.GetType()}");
+            Console.WriteLine($"Base type Of array : {array.GetType().BaseType}");
         }
     }
 }
