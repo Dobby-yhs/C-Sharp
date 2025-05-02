@@ -157,3 +157,25 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/26*
+
+### Day 12
+- 배열
+	- System.Index & ^연산자
+	- 배열의 초기화
+	- System.Array
+		- Array 클래스의 주요 메서드와 프로퍼티
+		- 이진 탐색
+		- 선형 탐색
+		- Array.TrueForAll<T>() 메서드
+		- 람다식
+		- Action 대리자
+	- 배열의 분할
+- 2차원 배열
+- 다차원 배열
+- 가변 배열
+	- 선언 방식
+	- 작동 방식
+	- 선언과 초기화
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/30*
