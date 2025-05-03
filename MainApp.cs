@@ -2,24 +2,41 @@
 using System.Collections;
 using static System.Console;
 
-namespace UsingHashtable
+namespace InitializingCollections
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-           Hashtable ht = new Hashtable();
-            ht["하나"] = "one";
-            ht["둘"] = "two";
-            ht["셋"] = "three";
-            ht["넷"] = "four";
-            ht["다섯"] = "five";
+            int[] arr = { 123, 456, 789 };
 
-            WriteLine(ht["하나"]);
-            WriteLine(ht["둘"]);
-            WriteLine(ht["셋"]);
-            WriteLine(ht["넷"]);
-            WriteLine(ht["다섯"]);
+            ArrayList list = new ArrayList(arr);
+            foreach(object item in list)
+            {
+                WriteLine($"ArrayList : {item}");
+            }
+            Console.WriteLine();
+
+            Stack stack = new Stack(arr);
+            foreach (object item in stack)
+            {
+                WriteLine($"Stack : {item}");
+            }
+            Console.WriteLine();
+
+            Queue queue = new Queue(arr);
+            foreach (object item in queue)
+            {
+                WriteLine($"Queue : {item}");
+            }
+            Console.WriteLine();
+
+            ArrayList list2 = new ArrayList() { 11, 22, 33 };
+            foreach (object item in list2)
+            {
+                WriteLine($"ArrayList2 : {item}");
+            }
+            Console.WriteLine();
         }
     }
 }
