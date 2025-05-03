@@ -2,19 +2,68 @@
 using System.Collections;
 using static System.Console;
 
-namespace Yield
+namespace Enumerable
 {
-    class MyEnumerator
+    class MyList : IEnumerable, IEnumerator
     {
-        int[] numbers = { 1, 2, 3, 4 };
+        private int[] array;
+        int position = -1;    // Code A
 
+        public MyList()
+        {
+            array = new int[3];
+        }
+
+        public int this[int index]
+        {
+            get
+            {
+                return array[index];
+            }
+            set
+            {
+                if (index >= array.Length)
+                {
+                    Array.Resize(ref array, index + 1);
+                    Console.WriteLine($"Array Resized : {array.Length}");
+                }
+
+                array[index] = value;
+            }
+        }
+
+        // IEnumerator 멤버
+        public object Current
+        {
+            get
+            {
+                return array[position];
+            }
+        }
+
+        // IEnumerator 멤버
+        public bool MoveNext()
+        {
+            if (position == array.Length - 1)
+            {
+                Reset();
+                return false;
+            }
+
+            position++;
+            return (position < array.Length);
+        }
+
+        // IEnumerator 멤버
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        // IEnumerable 멤버
         public IEnumerator GetEnumerator()
         {
-            yield return numbers[0];
-            yield return numbers[1];
-            yield return numbers[2];
-            yield break;              // bield break는 GetEnumerator() 메서드를 종료시킵니다.
-            yield return numbers[3];  // 따라서 이 코드는 실행되지 않습니다.
+            return this;
         }
     }  
    
@@ -22,10 +71,15 @@ namespace Yield
     {
         static void Main(string[] args)
         {
-            var obj = new MyEnumerator();
-            foreach (int i in obj)
+            MyList list = new MyList();
+            for (int i = 0; i < 5; ++i)
             {
-                Console.WriteLine(i);
+                list[i] = i;
+            }
+
+            foreach(int e in  list)
+            {
+                Console.WriteLine(e);
             }
         }
     }
