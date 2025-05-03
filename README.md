@@ -179,3 +179,21 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/30*
+
+### Day 13
+- 컬렉션
+	- ArrayList
+	- Queue
+	- Stack
+	- Hashtable
+- 컬렉션을 초기화하는 방법
+	- ArrayList, Queue, Stack의 초기화
+	- Hashtable의 초기화
+- 인덱서
+- foreach가 가능한 객체 만들기
+	- foreach 문 작동 방식
+	- yield 문
+	- IEnumerator
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/32*
