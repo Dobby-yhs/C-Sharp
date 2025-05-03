@@ -2,41 +2,55 @@
 using System.Collections;
 using static System.Console;
 
-namespace InitializingCollections
+namespace Indexer
 {
+    class MyList
+    {
+        private int[] array;
+
+        public MyList()
+        {
+            array = new int[3];
+        }
+
+        public int this[int index]
+        {
+            get
+            {
+                return array[index]; ;
+            }
+            set
+            {
+                if (index >= array.Length)
+                {
+                    Array.Resize(ref array, index + 1);
+                    Console.WriteLine($"Array Resized : {array.Length}");
+                }
+
+                array[index] = value;
+            }
+        }
+
+        public int Length
+        {
+            get { return array.Length; }
+        }
+    }  
+   
     class MainApp
     {
         static void Main(string[] args)
         {
-            int[] arr = { 123, 456, 789 };
-
-            ArrayList list = new ArrayList(arr);
-            foreach(object item in list)
+            MyList list = new MyList();
+            for (int i = 0; i < 5; ++i)
             {
-                WriteLine($"ArrayList : {item}");
+                list[i] = i;
             }
-            Console.WriteLine();
 
-            Stack stack = new Stack(arr);
-            foreach (object item in stack)
+            for (int i = 0; i <list.Length; ++i)
             {
-                WriteLine($"Stack : {item}");
+                Console.WriteLine(list[i]);
             }
-            Console.WriteLine();
-
-            Queue queue = new Queue(arr);
-            foreach (object item in queue)
-            {
-                WriteLine($"Queue : {item}");
-            }
-            Console.WriteLine();
-
-            ArrayList list2 = new ArrayList() { 11, 22, 33 };
-            foreach (object item in list2)
-            {
-                WriteLine($"ArrayList2 : {item}");
-            }
-            Console.WriteLine();
         }
     }
 }
