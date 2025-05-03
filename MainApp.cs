@@ -2,38 +2,19 @@
 using System.Collections;
 using static System.Console;
 
-namespace Indexer
+namespace Yield
 {
-    class MyList
+    class MyEnumerator
     {
-        private int[] array;
+        int[] numbers = { 1, 2, 3, 4 };
 
-        public MyList()
+        public IEnumerator GetEnumerator()
         {
-            array = new int[3];
-        }
-
-        public int this[int index]
-        {
-            get
-            {
-                return array[index]; ;
-            }
-            set
-            {
-                if (index >= array.Length)
-                {
-                    Array.Resize(ref array, index + 1);
-                    Console.WriteLine($"Array Resized : {array.Length}");
-                }
-
-                array[index] = value;
-            }
-        }
-
-        public int Length
-        {
-            get { return array.Length; }
+            yield return numbers[0];
+            yield return numbers[1];
+            yield return numbers[2];
+            yield break;              // bield break는 GetEnumerator() 메서드를 종료시킵니다.
+            yield return numbers[3];  // 따라서 이 코드는 실행되지 않습니다.
         }
     }  
    
@@ -41,15 +22,10 @@ namespace Indexer
     {
         static void Main(string[] args)
         {
-            MyList list = new MyList();
-            for (int i = 0; i < 5; ++i)
+            var obj = new MyEnumerator();
+            foreach (int i in obj)
             {
-                list[i] = i;
-            }
-
-            for (int i = 0; i <list.Length; ++i)
-            {
-                Console.WriteLine(list[i]);
+                Console.WriteLine(i);
             }
         }
     }
