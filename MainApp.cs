@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UsingGenericQueue
+namespace UsingGenericStack
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Queue<int> queue = new Queue<int>();
+            Stack<int> stack = new Stack<int>();
 
-            queue.Enqueue(1);
-            queue.Enqueue(2);
-            queue.Enqueue(3);
-            queue.Enqueue(4);
-            queue.Enqueue(5);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
 
-            while (queue.Count > 0)
-                Console.WriteLine(queue.Dequeue());
+            while (stack.Count > 0)
+                Console.WriteLine(stack.Pop());
         }
     }
 }
