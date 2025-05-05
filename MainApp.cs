@@ -1,33 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using static System.Console;
-
-namespace UsingGenericList
+namespace UsingGenericQueue
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int>();
-            for (int i = 0; i < 5; ++i)
-                list.Add(i);
+            Queue<int> queue = new Queue<int>();
 
-            foreach (int element in list)
-                Console.Write($"{element} ");
-            Console.WriteLine();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+            queue.Enqueue(4);
+            queue.Enqueue(5);
 
-            list.RemoveAt(2);
-
-            foreach (int element in list)
-                Console.Write($"{element} ");
-            Console.WriteLine();
-
-            list.Insert(2, 2);
-
-            foreach (int element in list)
-                Console.Write($"{element} ");
-            Console.WriteLine();
+            while (queue.Count > 0)
+                Console.WriteLine(queue.Dequeue());
         }
     }
 }
