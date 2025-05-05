@@ -2,85 +2,36 @@
 using System.Collections;
 using static System.Console;
 
-namespace Enumerable
+namespace GenericMethod
 {
-    class MyList : IEnumerable, IEnumerator
-    {
-        private int[] array;
-        int position = -1;    // Code A
-
-        public MyList()
-        {
-            array = new int[3];
-        }
-
-        public int this[int index]
-        {
-            get
-            {
-                return array[index];
-            }
-            set
-            {
-                if (index >= array.Length)
-                {
-                    Array.Resize(ref array, index + 1);
-                    Console.WriteLine($"Array Resized : {array.Length}");
-                }
-
-                array[index] = value;
-            }
-        }
-
-        // IEnumerator 멤버
-        public object Current
-        {
-            get
-            {
-                return array[position];
-            }
-        }
-
-        // IEnumerator 멤버
-        public bool MoveNext()
-        {
-            if (position == array.Length - 1)
-            {
-                Reset();
-                return false;
-            }
-
-            position++;
-            return (position < array.Length);
-        }
-
-        // IEnumerator 멤버
-        public void Reset()
-        {
-            position = -1;
-        }
-
-        // IEnumerable 멤버
-        public IEnumerator GetEnumerator()
-        {
-            return this;
-        }
-    }  
-   
     class MainApp
     {
+        static void CopyArray<T>(T[] source, T[] target)
+        {
+            for (int i = 0; i < source.Length; ++i)
+                target[i] = source[i];
+        }
+
         static void Main(string[] args)
         {
-            MyList list = new MyList();
-            for (int i = 0; i < 5; ++i)
-            {
-                list[i] = i;
-            }
+            int[] source = { 1, 2, 3, 4, 5 };
+            int[] target = new int[source.Length];
 
-            foreach(int e in  list)
-            {
-                Console.WriteLine(e);
-            }
+            // int형으로 일반화 메서드 사용
+            CopyArray<int>(source, target);
+
+            foreach (int element  in target)
+                Console.WriteLine(element);
+
+
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯" };
+            string[] target2 = new string[source2.Length];
+
+            // string형으로 일반화 메서드 사용
+            CopyArray<string>(source2, target2);
+
+            foreach (string element in target2)
+                Console.WriteLine(element);
         }
     }
 }
