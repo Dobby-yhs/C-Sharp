@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UsingGenericStack
+namespace UsingDictionary
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Stack<int> stack = new Stack<int>();
+           Dictionary<string, string> dic = new Dictionary<string, string>();
 
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
-            stack.Push(4);
-            stack.Push(5);
+            dic["하나"] = "one";
+            dic["둘"] = "two";
+            dic["셋"] = "three";
+            dic["넷"] = "four";
+            dic["다섯"] = "five";
 
-            while (stack.Count > 0)
-                Console.WriteLine(stack.Pop());
+            Console.WriteLine(dic["하나"]);
+            Console.WriteLine(dic["둘"]);
+            Console.WriteLine(dic["셋"]);
+            Console.WriteLine(dic["넷"]);
+            Console.WriteLine(dic["다섯"]);
         }
     }
 }
