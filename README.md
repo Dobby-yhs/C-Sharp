@@ -197,3 +197,18 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/32*
+
+### Day 14
+- 일반화 프로그래밍
+	- 일반화 메서드
+	- 일반화 클래스
+	- where 절 : 특정 조건을 갖춘 형식에만 대응하는 형식 매개변수
+- 일반화 컬렉션
+	- List<T>
+	- Queue<T>
+	- Stack<T>
+	- Dictionary<TKey, TValue>
+- foreach가 가능한 일반화 클래스
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/34*
