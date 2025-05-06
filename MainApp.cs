@@ -1,33 +1,52 @@
 ﻿using System;
 
-namespace ThrowExpression
+namespace Finally
 {
     class MainApp
     {
+        static int Divide(int dividend, int divisor)
+        {
+            try
+            {
+                Console.WriteLine("Divide() 시작");
+                return dividend / divisor;
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("Divide() 예외 발생");
+                throw e;
+            }
+            finally
+            {
+                Console.WriteLine("Divide() 끝");
+            }
+        }
+
         static void Main(string[] args)
         {
             try
             {
-                int? a = null;
-                int b = a ?? throw new ArgumentException();
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e);
-            }
+                Console.Write("제수를 입력하세요. : ");
+                String temp = Console.ReadLine();
+                int dividend = Convert.ToInt32(temp);
 
-            try
-            {
-                int[] array = new[] { 1, 2, 3 };
-                int index = 4;
-                int value = array[
-                    index >= 0 && index < 3
-                    ? index : throw new IndexOutOfRangeException()
-                    ];
+                Console.Write("피제수를 입력하세요 : ");
+                temp = Console.ReadLine();
+                int divisor = Convert.ToInt32(temp);
+
+                Console.WriteLine("{0} / {1} = {2}", dividend, divisor, Divide(dividend, divisor));
             }
-            catch (IndexOutOfRangeException e)
+            catch (FormatException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("에러 : " + e.Message);
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("에러 : " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("프로그램을 종료합니다.");
             }
         }
     }
