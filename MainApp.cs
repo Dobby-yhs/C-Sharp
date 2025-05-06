@@ -1,44 +1,33 @@
 ﻿using System;
 
-namespace Throw
+namespace ThrowExpression
 {
     class MainApp
     {
-        static void DoSomething(int arg)
-        {
-            if (arg < 10)
-                Console.WriteLine($"arg : {arg}");
-            else
-                throw new Exception("arg가 10보다 큽니다.");
-        }
-
         static void Main(string[] args)
         {
             try
             {
-                DoSomething(1);
-                DoSomething(3);
-                DoSomething(5);
-                DoSomething(9);
-                DoSomething(11);
-                DoSomething(13);
+                int? a = null;
+                int b = a ?? throw new ArgumentException();
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-                Console.WriteLine($"e.ToString()     : {e.ToString()}");
-                Console.WriteLine();
-                Console.WriteLine($"e.Message        : {e.Message}");
-                Console.WriteLine();
-                Console.WriteLine($"e.StackTrace     : {e.StackTrace}");
-                Console.WriteLine();
-                Console.WriteLine($"e.InnerException : {e.InnerException}");
-                Console.WriteLine();
-                Console.WriteLine($"e.Data           : {e.Data}");
-                Console.WriteLine();
-                Console.WriteLine($"e.Source         : {e.Source}");
-                Console.WriteLine();
-                Console.WriteLine($"e.TargetSite     : {e.TargetSite}");
-                Console.WriteLine();
+                Console.WriteLine(e);
+            }
+
+            try
+            {
+                int[] array = new[] { 1, 2, 3 };
+                int index = 4;
+                int value = array[
+                    index >= 0 && index < 3
+                    ? index : throw new IndexOutOfRangeException()
+                    ];
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine(e);
             }
         }
     }
