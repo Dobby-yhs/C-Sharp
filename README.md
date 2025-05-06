@@ -212,3 +212,16 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/34*
+
+### Day 15
+- 예외 처리
+- try ~ catch
+- System.Exception 클래스
+- 예외 던지기 : throw 문
+- try ~ catch & finally
+- 사용자 정의 예외 클래스
+- 예외 필터
+- 예외 처리의 용이성
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/36*
