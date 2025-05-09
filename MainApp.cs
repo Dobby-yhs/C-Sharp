@@ -1,70 +1,64 @@
 ﻿using System;
 
-namespace DelegateChains
+namespace AnonymousMethod
 {
-    delegate void Notify(string message);
-
-    class Notifier
-    {
-        public Notify EventOccured;
-    }
-
-    class EventListener
-    {
-        private string name;
-        public EventListener(string name)
-        {
-            this.name = name;
-        }
-
-        public void SomethingHappend(string message)
-        {
-            Console.WriteLine($"{name}.SomethingHappend : {message}");
-        }
-    }
+    delegate int Compare(int a, int b);
 
     class MainApp
-    {        
+    {
+        static void BubbleSort(int[] DataSet, Compare Comparer)
+        {
+            int i = 0;
+            int j = 0;
+            int temp = 0;
+
+            for (i = 0; i < DataSet.Length - 1; ++i)
+            {
+                for (j = 0; j < DataSet.Length - (i + 1); ++j)
+                {
+                    if (Comparer(DataSet[j], DataSet[j + 1]) > 0)
+                    {
+                        temp = DataSet[j + 1];
+                        DataSet[j + 1] = DataSet[j];
+                        DataSet[j] = temp;
+                    }
+                }
+            }
+        }
         static void Main(string[] args)
         {
-            Notifier notifier = new Notifier();
-            EventListener listener1 = new EventListener("Listener1");
-            EventListener listener2 = new EventListener("Listener2");
-            EventListener listener3 = new EventListener("Listener3");
+            int[] array = { 3, 7, 4, 2, 10 };
 
-            // += 연산자를 이용한 체인 만들기
-            notifier.EventOccured += listener1.SomethingHappend;
-            notifier.EventOccured += listener2.SomethingHappend;
-            notifier.EventOccured += listener3.SomethingHappend;
-            notifier.EventOccured("You've got mail.");
+            Console.WriteLine("sorting ascending...");
+            BubbleSort(array, delegate (int a, int b)  // 익명 메서드
+            {
+                if (a > b)
+                    return 1;
+                else if (a == b)
+                    return 0;
+                else
+                    return -1;
+            });
 
-            Console.WriteLine();
+            for (int i = 0; i < array.Length; ++i)
+                Console.Write($"{array[i]} ");
 
-            // -= 연산자를 이용한 체인 끊기
-            notifier.EventOccured -= listener2.SomethingHappend;
-            notifier.EventOccured("Download complete.");
 
-            Console.WriteLine();
+            int[] array2 = { 7, 2, 8, 10, 11 };
 
-            // +, = 연산자를 이용한 체인 만들기
-            notifier.EventOccured = new Notify(listener2.SomethingHappend)
-                                    + new Notify(listener3.SomethingHappend);
-            notifier.EventOccured("Nuclear launch detected.");
+            Console.WriteLine("\nSorting descending...");
+            BubbleSort(array2, delegate (int a, int b) // 익명 메서드
+            {
+                if (a < b)
+                    return 1;
+                else if (a == b)
+                    return 0;
+                else
+                    return -1;
+            });
 
-            Console.WriteLine();
-
-            Notify notify1 = new Notify(listener1.SomethingHappend);
-            Notify notify2 = new Notify(listener2.SomethingHappend);
-
-            // Delegate.Combine() 메서드를 이용한 체인 만들기
-            notifier.EventOccured = (Notify)Delegate.Combine(notify1, notify2);
-            notifier.EventOccured("Fire!!");
-
-            Console.WriteLine();
-
-            // Delegate.Remove() 메서드를 이용한 체인 끊기
-            notifier.EventOccured = (Notify)Delegate.Remove(notifier.EventOccured, notify2);
-            notifier.EventOccured("RPG!");
+            for (int i = 0; i < array2.Length; ++i)
+                Console.Write($"{array2[i]} ");
         }
     }
 }
