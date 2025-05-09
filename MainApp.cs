@@ -1,36 +1,34 @@
 ﻿using System;
 
-namespace ExceptionFiltering
+namespace Delegate
 {
-    class FilterableException : Exception
+    delegate int MyDelegate(int a, int b);
+
+    class Calculator
     {
-        public int ErrorNo { get; set; }
+        public int Plus(int a, int b)  // 대리자는 인스턴스 메서드도 참조 가능합니다.
+        {
+            return a + b;
+        }
+
+        public static int Minus(int a, int b)  // 대리자는 정적 메서드도 참조 가능합니다.
+        {
+            return a - b;
+        }
     }
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter Number Between 0 ~ 10");
-            string input = Console.ReadLine();
+            Calculator Calc = new Calculator();
+            MyDelegate Callback;
 
-            try
-            {
-                int num = Int32.Parse(input);
+            Callback = new MyDelegate(Calc.Plus);
+            Console.WriteLine(Callback(3, 4));  // 메서드를 호출하듯 대리자를 사용하면, 참조하고 있는 메서드가 실행됩니다.
 
-                if (num < 0 || num > 10)
-                    throw new FilterableException() { ErrorNo = num };
-                else
-                    Console.WriteLine($"Output : {num}");
-            }
-            catch (FilterableException e) when (e.ErrorNo < 0)
-            {
-                Console.WriteLine("Negative input is not allowed.");
-            }
-            catch(FilterableException e) when (e.ErrorNo > 10)
-            {
-                Console.WriteLine("Too big number is not allowed.");
-            }
+            Callback = new MyDelegate(Calculator.Minus);
+            Console.WriteLine(Callback(7, 5));
         }
     }
 }
