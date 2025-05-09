@@ -1,64 +1,39 @@
 ﻿using System;
 
-namespace AnonymousMethod
+namespace EventTest
 {
-    delegate int Compare(int a, int b);
+    delegate void EventHandler(string message);
+
+    class MyNotifier
+    {
+        public event EventHandler SomethingHappend;
+        public void DoSomething(int number)
+        {
+            int temp = number % 10;
+
+            if (temp != 0 && temp % 3 == 0)
+            {
+                SomethingHappend(String.Format("{0} : 짝", number));
+            }
+        }
+    }
 
     class MainApp
     {
-        static void BubbleSort(int[] DataSet, Compare Comparer)
+        static public void MyHandler(string message)
         {
-            int i = 0;
-            int j = 0;
-            int temp = 0;
-
-            for (i = 0; i < DataSet.Length - 1; ++i)
-            {
-                for (j = 0; j < DataSet.Length - (i + 1); ++j)
-                {
-                    if (Comparer(DataSet[j], DataSet[j + 1]) > 0)
-                    {
-                        temp = DataSet[j + 1];
-                        DataSet[j + 1] = DataSet[j];
-                        DataSet[j] = temp;
-                    }
-                }
-            }
+            Console.WriteLine(message);
         }
+
         static void Main(string[] args)
         {
-            int[] array = { 3, 7, 4, 2, 10 };
+            MyNotifier notifier = new MyNotifier();
+            notifier.SomethingHappend += new EventHandler(MyHandler);
 
-            Console.WriteLine("sorting ascending...");
-            BubbleSort(array, delegate (int a, int b)  // 익명 메서드
+            for (int i = 1; i < 30; ++i)
             {
-                if (a > b)
-                    return 1;
-                else if (a == b)
-                    return 0;
-                else
-                    return -1;
-            });
-
-            for (int i = 0; i < array.Length; ++i)
-                Console.Write($"{array[i]} ");
-
-
-            int[] array2 = { 7, 2, 8, 10, 11 };
-
-            Console.WriteLine("\nSorting descending...");
-            BubbleSort(array2, delegate (int a, int b) // 익명 메서드
-            {
-                if (a < b)
-                    return 1;
-                else if (a == b)
-                    return 0;
-                else
-                    return -1;
-            });
-
-            for (int i = 0; i < array2.Length; ++i)
-                Console.Write($"{array2[i]} ");
+                notifier.DoSomething(i);
+            }
         }
     }
 }
