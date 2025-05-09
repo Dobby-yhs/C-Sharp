@@ -225,3 +225,15 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/36*
+
+### Day 16
+- 대리자
+	- 대리자의 사용
+	- 일반화 대리자
+- 대리자 체인 : 멀티캐스팅
+- 대리자의 익명 메서드 사용
+- 이벤트
+	- 대리자와 이벤트
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/38*
