@@ -1,36 +1,26 @@
 ﻿using System;
 
-namespace UsingCallback
+namespace GenericDelegate
 {
-    delegate int Compare(int a, int b);
+    delegate int Compare<T>(T a, T b);
 
     class MainApp
     {
-        static int AscendCompare(int a, int b)
+        static int AscendCompare<T>(T a, T b) where T : IComparable<T>
         {
-            if (a > b)
-                return 1;
-            else if (a == b)
-                return 0;
-            else
-                return -1;
+            return a.CompareTo(b);
         }
 
-        static int DescendCompare(int a, int b)
+        static int DescendCompare<T>(T a, T b) where T : IComparable<T>
         {
-            if (a < b)
-                return 1;
-            else if (a == b)
-                return 0;
-            else
-                return -1;
+            return a.CompareTo(b) * -1;
         }
 
-        static void BubbleSort(int[] DataSet, Compare Comaparer)
+        static void BubbleSort<T>(T[] DataSet, Compare<T> Comaparer)
         {
             int i = 0;
             int j = 0;
-            int temp = 0;
+            T temp;
 
             for (i = 0; i < DataSet.Length - 1; ++i) 
             {
@@ -51,16 +41,16 @@ namespace UsingCallback
             int[] array = { 3, 7, 4, 2, 10 };
 
             Console.WriteLine("sorting ascending...");
-            BubbleSort(array, new Compare(AscendCompare));
+            BubbleSort<int>(array, new Compare<int>(AscendCompare));
 
             for (int i = 0; i < array.Length; ++i)
                 Console.Write($"{array[i]} ");
 
 
-            int[] array2 = { 7, 2, 8, 10, 11 };
+            string[] array2 = { "abc", "def", "ghi", "jkl", "mno" };
 
             Console.WriteLine("\nSorting descending...");
-            BubbleSort(array2, new Compare(DescendCompare));
+            BubbleSort<string>(array2, new Compare<string>(DescendCompare));
 
             for (int i = 0; i < array2.Length; ++i)
                 Console.Write($"{array2[i]} ");
