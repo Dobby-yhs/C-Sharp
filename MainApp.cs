@@ -1,34 +1,44 @@
 ﻿using System;
 using System.Linq;
 
-namespace NestedFrom
+namespace GroupBy
 { 
-    class Class
+    class Profile
     {
         public string Name { get; set; }
-        public int[] Score { get; set; }
+        public int Height { get; set; }
     }
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            Class[] arrClass =
+            Profile[] arrProfile =
             {
-                new Class(){Name = "연두반", Score = new int[]{ 99, 80, 70, 24 } },
-                new Class(){Name = "분홍반", Score = new int[]{ 60, 45, 87, 72 } },
-                new Class(){Name = "파랑반", Score = new int[]{ 92, 30, 85, 94 } },
-                new Class(){Name = "노랑반", Score = new int[]{ 90, 88, 0,  17 } }
+                new Profile() {Name = "AAA", Height = 186 },
+                new Profile() {Name = "BBB", Height = 158 },
+                new Profile() {Name = "CCC", Height = 172 },
+                new Profile() {Name = "DDD", Height = 178 },
+                new Profile() {Name = "EEE", Height = 171 }
             };
 
-            var classes = from c in arrClass
-                          from s in c.Score
-                          where s < 60
-                          orderby s
-                          select new { c.Name, Lowest = s };
+            var listprofiles = from profile in arrProfile
+                               orderby profile.Height
+                               group profile by profile.Height < 175 into g
+                               select new { GroupKey = g.Key, Profiles = g };
 
-            foreach (var c in classes)
-                Console.WriteLine($"낙제 : {c.Name} ({c.Lowest})");
+            foreach(var Group in listprofiles)
+            {
+                Console.WriteLine($"- 175cm 미만? : {Group.GroupKey}");
+
+                foreach(var Profile in Group.Profiles)
+                {
+                    Console.WriteLine($">>> {Profile.Name}, {Profile.Height}");
+                }
+            }
         }
     }
 }
+
+
+
