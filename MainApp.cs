@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace InnerJoin
+namespace OuterJoin
 { 
     class Category
     {
@@ -25,7 +25,8 @@ namespace InnerJoin
             {
                 new Category(){ ID = 1, Name = "전자제품" },
                 new Category(){ ID = 2, Name = "도서" },
-                new Category(){ ID = 3, Name = "의류" }
+                new Category(){ ID = 3, Name = "의류" },
+                new Category(){ ID = 4, Name = "생필품" }
             };
 
             Product[] arrProduct =
@@ -40,7 +41,8 @@ namespace InnerJoin
             };
 
             var listCategory = from category in arrCategory
-                               join product in arrProduct on category.ID equals product.CategoryID
+                               join product in arrProduct on category.ID equals product.CategoryID into ps
+                               from product in ps.DefaultIfEmpty(new Product() { Name = "해당 없음" , ID = 999 })
                                select new
                                {
                                    Name = category.Name,
