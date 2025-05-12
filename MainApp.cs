@@ -1,19 +1,28 @@
 ﻿using System;
 
-namespace FuncDelegate
+namespace ActionDelegate
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Func<int> func1 = () => 12;
-            Console.WriteLine($"func1() : {func1()}");
+            Action act1 = () => Console.WriteLine("Action()");
+            act1();
 
-            Func<int, int> func2 = (x) => x * 2;
-            Console.WriteLine($"func2(4) : {func2(4)}");
+            int result = 0;
+            Action<int> act2 = (x) => result = x * x;  
+                                    // 람다식 밖에서 선언한 result에 x * x의 결과를 저장합니다.
 
-            Func<double, double, double> func3 = (x, y) => x / y;
-            Console.WriteLine($"func3(22, 7) : {func3(22, 7)}");
+            act2(3);
+            Console.WriteLine($"result : {result}");
+
+            Action<double, double> act3 = (x, y) =>
+            {
+                double pi = x / y;
+                Console.WriteLine($"Action<T1, T2>({x}, {y}) : {pi}");
+            };
+
+            act3(22.0, 7.0);
         }
     }
 }
