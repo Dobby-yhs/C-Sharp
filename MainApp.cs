@@ -1,35 +1,22 @@
 ﻿using System;
 
-namespace EX13_2
+namespace SimpleLambda
 {
-    delegate int MyDelegate(int a);
-
-    class Market
-    {
-        public event MyDelegate CustomerEvent;
-      
-        public void BuySomething(int CustomerNo)
-        {
-            if (CustomerNo == 30)
-                CustomerEvent(CustomerNo);
-        }
-    }
-
     class MainApp
     {
-        static int MyHandler(int customerNo)
-        {
-            Console.WriteLine($"축하합니다! {customerNo}번째 고객 이벤트에 당첨되셨습니다.");
-            return 0; 
-        }
+        delegate int Calculate(int a, int b);
 
         static void Main(string[] args)
         {
-            Market market = new Market();
-            market.CustomerEvent += new MyDelegate(MyHandler);
+            Calculate calc_Method = delegate(int a, int b)
+                                    { return a + b; };
 
-            for (int customerNo = 0; customerNo < 100; customerNo += 10)
-                market.BuySomething(customerNo);
+            Console.WriteLine($"Calc_Anonymous Method : 3 + 4 = {calc_Method(3, 4)}");
+
+
+            Calculate calc_Function = (a, b) => a + b;
+
+            Console.WriteLine($"Calc_Anonymous Function : 3 + 4 =  {calc_Function(3, 4)}");
         }
     }
 }
