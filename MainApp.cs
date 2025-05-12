@@ -1,22 +1,24 @@
 ﻿using System;
 
-namespace SimpleLambda
+namespace StatementLambda
 {
     class MainApp
     {
-        delegate int Calculate(int a, int b);
+        delegate string Concatenate(string[] args);
 
         static void Main(string[] args)
         {
-            Calculate calc_Method = delegate(int a, int b)
-                                    { return a + b; };
+            Concatenate concat =
+                (arr) =>
+                {
+                    string result = "";
+                    foreach (string s in arr)
+                        result += s;
 
-            Console.WriteLine($"Calc_Anonymous Method : 3 + 4 = {calc_Method(3, 4)}");
+                    return result;
+                };
 
-
-            Calculate calc_Function = (a, b) => a + b;
-
-            Console.WriteLine($"Calc_Anonymous Function : 3 + 4 =  {calc_Function(3, 4)}");
+            Console.WriteLine(concat(args));
         }
     }
 }
