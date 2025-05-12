@@ -237,3 +237,28 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/38*
+
+### Day 17
+- 람다식
+	- 문 형식의 람다식
+	- Fuc와 Action을 활용한 무명 함수
+- 식 트리
+	- Expression 클래스의 파생 클래스
+		- 팩토리 메서드
+	- 식 트리를 사용하는 이유
+	- 식 트리를 동적으로 만들어야 할 이유
+	- 식 본문 멤버
+- LINQ
+	- from
+	- where
+	- orderby
+	- select
+	- group by
+	- group by into
+	- join
+		- Inner Join
+		- Outer Join
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/40*
+>   > *https://sunlight-dby.tistory.com/41*
