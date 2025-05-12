@@ -1,60 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace OuterJoin
-{ 
-    class Category
+namespace MethodLINQ
+{
+    class Profile
     {
-        public int ID { get; set; }
         public string Name { get; set; }
+        public int Height { get; set; }
     }
-
-    class Product
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int CategoryID { get; set; }
-    }
-
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            Category[] arrCategory =
+            Profile[] arrProfile =
             {
-                new Category(){ ID = 1, Name = "전자제품" },
-                new Category(){ ID = 2, Name = "도서" },
-                new Category(){ ID = 3, Name = "의류" },
-                new Category(){ ID = 4, Name = "생필품" }
+                new Profile() {Name = "AAA", Height = 186 },
+                new Profile() {Name = "BBB", Height = 158 },
+                new Profile() {Name = "CCC", Height = 172 },
+                new Profile() {Name = "DDD", Height = 178 },
+                new Profile() {Name = "EEE", Height = 171 }
             };
 
-            Product[] arrProduct =
-            {
-                new Product(){ ID = 101, Name = "노트북", CategoryID = 1 },
-                new Product(){ ID = 102, Name = "키보드", CategoryID = 1 },
-                new Product(){ ID = 103, Name = "C# 프로그래밍", CategoryID = 2 },
-                new Product(){ ID = 104, Name = "C++ 프로그래밍", CategoryID = 2 },
-                new Product(){ ID = 105, Name = "청바지", CategoryID = 3 },
-                new Product(){ ID = 106, Name = "티셔츠", CategoryID = 3 },
-                new Product(){ ID = 107, Name = "알 수 없는 상품", CategoryID = 99 }
-            };
+            var profiles = arrProfile
+                                .Where(profile => profile.Height < 175)
+                                .OrderBy(profile => profile.Height)
+                                .Select(profile =>
+                                        new
+                                        {
+                                            Name = profile.Name,
+                                            InchHeight = profile.Height * 0.393
+                                        });
 
-            var listCategory = from category in arrCategory
-                               join product in arrProduct on category.ID equals product.CategoryID into ps
-                               from product in ps.DefaultIfEmpty(new Product() { Name = "해당 없음" , ID = 999 })
-                               select new
-                               {
-                                   Name = category.Name,
-                                   ProductName = product.Name,
-                                   Id = product.ID
-                               };
-
-            foreach (var category in listCategory)
-            {
-                Console.WriteLine("카테고리 분류 : {0} / 제품 이름 : {1} / 제품 ID : {2}",
-                                   category.Name, category.ProductName, category.Id);
-            }
+            foreach (var profile in profiles)
+                Console.WriteLine($"{profile.Name}, {profile.InchHeight}");
         }
     }
 }
