@@ -1,61 +1,57 @@
 ﻿using System;
 using System.Reflection;
+using System.Reflection.Emit;
 
-namespace DynamicInstance
+namespace EmitTest
 {
-    class Profile
-    {
-        private string name;
-        private string phone;
-        
-        public Profile()
-        {
-            name = ""; phone = "";
-        }
-
-        public Profile(string name, string phone)
-        {
-            this.name = name;
-            this.phone = phone;
-        }
-
-        public void Print()
-        {
-            Console.WriteLine($"{name}, {phone}");
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public string Phone
-        {
-            get { return phone; }
-            set { phone = value; }
-        }
-    }
     class MainApp
     {
         static void Main(string[] args)
         {
-            Type type = Type.GetType("DynamicInstance.Profile");
-            MethodInfo methodInfo = type.GetMethod("Print");
+            // Code A
+            // Create Assembly
+            AssemblyBuilder newAssembly = 
+                AssemblyBuilder.DefineDynamicAssembly(
+                new AssemblyName("CalculatorAssembly"),
+                AssemblyBuilderAccess.Run);
 
-            PropertyInfo nameProperty = type.GetProperty("Name");
-            PropertyInfo phoneProperty = type.GetProperty("Phone");
+            // Code B
+            // Create Module
+            ModuleBuilder newModule = newAssembly.DefineDynamicModule("Calculator");
 
-            object profile = Activator.CreateInstance(type, "김철수", "512-1234");
-            methodInfo.Invoke(profile, null);
+            // Code C
+            // Create Class
+            TypeBuilder newType = newModule.DefineType("Sum1To100");
 
-            profile = Activator.CreateInstance(type);
-            nameProperty.SetValue(profile, "박영희", null);
-            phoneProperty.SetValue(profile, "997-5511", null);
+            // Code D
+            // Create Method 
+            MethodBuilder newMethod = newType.DefineMethod(
+                "Calculate",
+                MethodAttributes.Public,
+                typeof(int),    // 반환 형식
+                new Type[0]);   // 매개변수
 
-            Console.WriteLine("{0}, {1}",
-                nameProperty.GetValue(profile, null),
-                phoneProperty.GetValue(profile, null));
+            // Code E
+            // Create IL Commands to by executed by the method
+            ILGenerator generator = newMethod.GetILGenerator();
+
+            generator.Emit(OpCodes.Ldc_I4, 1);
+
+            for (int i = 2; i <= 100; i++)
+            {
+                generator.Emit(OpCodes.Ldc_I4, i);
+                generator.Emit(OpCodes.Add);
+            }
+
+            generator.Emit(OpCodes.Ret);
+
+            // Sum1To100 Class Emit to CLR
+            newType.CreateType();
+
+            // Generate Dynamic Instance of new type
+            object sum1To100 = Activator.CreateInstance(newType);
+            MethodInfo Calculate = sum1To100.GetType().GetMethod("Calculate");
+            Console.WriteLine(Calculate.Invoke(sum1To100, null));
         }
     }
 }
