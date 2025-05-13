@@ -1,17 +1,34 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-// using System.Runtime.CompilerServices;
 
-namespace CallerInfo
+namespace CustomAttribute
 {
-    public static class Trace
+    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+    class History : System.Attribute
     {
-        public static void WriteLine(string message,
-            [CallerFilePath] string file = "",
-            [CallerLineNumber] int line = 0,
-            [CallerMemberName] string member = "")
+        private string programmer;
+        public double version;
+        public string changes;
+
+        public History(string programmer)
         {
-            Console.WriteLine($"{file} (Line ; {line}) {member} : {message}");
+            this.programmer = programmer;
+            version = 1.0;
+            changes = "First release";
+        }
+
+        public string GetProgrammer()
+        {
+            return programmer;
+        }
+    }
+
+    [History("Sean", version = 0.1, changes = "2024-05-13 Created Class stub")]
+    [History("Bob", version = 0.2, changes = "2025-05-13 Added Func() Method")]
+    class MyClass
+    {
+        public void Func()
+        {
+            Console.WriteLine("Func()");
         }
     }
 
@@ -19,7 +36,18 @@ namespace CallerInfo
     {
         static void Main(string[] args)
         {
-            Trace.WriteLine("즐거운 프로그래밍!");
+            Type type = typeof(MyClass);
+            Attribute[] attributes = Attribute.GetCustomAttributes(type);
+
+            Console.WriteLine("MyClass change history...");
+
+            foreach(Attribute a in attributes)
+            {
+                History h = a as History;
+                if (h != null)  
+                    Console.WriteLine("Ver : {0}, Programmer : {1}, Changes : {2}",
+                        h.version, h.GetProgrammer(), h.changes);
+            }
         }
     }
 }
