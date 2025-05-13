@@ -1,18 +1,17 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+// using System.Runtime.CompilerServices;
 
-namespace BasicAttribute
+namespace CallerInfo
 {
-    class MyClass
+    public static class Trace
     {
-        [Obsolete("OldMethod는 폐기되었습니다. NewMethod()를 이용하세요.")]
-        public void OldMethod()
+        public static void WriteLine(string message,
+            [CallerFilePath] string file = "",
+            [CallerLineNumber] int line = 0,
+            [CallerMemberName] string member = "")
         {
-            Console.WriteLine("I'm old");
-        }
-
-        public void NewMethod()
-        {
-            Console.WriteLine("I'm new");
+            Console.WriteLine($"{file} (Line ; {line}) {member} : {message}");
         }
     }
 
@@ -20,10 +19,7 @@ namespace BasicAttribute
     {
         static void Main(string[] args)
         {
-            MyClass obj = new MyClass();
-
-            obj.OldMethod();
-            obj.NewMethod();
+            Trace.WriteLine("즐거운 프로그래밍!");
         }
     }
 }
