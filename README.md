@@ -262,3 +262,15 @@
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/40*
 >   > *https://sunlight-dby.tistory.com/41*
+
+### Day 18
+- 리플렉션
+	- Object.GetType() 메서드와 Type 클래스
+	- 리플렉션을 이용해서 객체 생성하고 이용하기
+	- 리플렉션을 이용해서 형식 내보내기
+- 어트리뷰트
+	- 호출자 정보 어트리뷰트
+	- 사용자 정의 어트리뷰트
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/43*
