@@ -1,52 +1,49 @@
 ﻿using System;
 
-namespace CustomAttribute
+namespace DuckTyping
 {
-    [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
-    class History : System.Attribute
+    class Duck
     {
-        private string programmer;
-        public double version;
-        public string changes;
+        public void  Walk()
+        { Console.WriteLine(this.GetType() + ".Walk"); }
 
-        public History(string programmer)
-        {
-            this.programmer = programmer;
-            version = 1.0;
-            changes = "First release";
-        }
+        public void Swim()
+        { Console.WriteLine(this.GetType() + ".Swim"); }
 
-        public string GetProgrammer()
-        {
-            return programmer;
-        }
+        public void Quack()
+        { Console.WriteLine(this.GetType() + ".Quack"); }
     }
 
-    [History("Sean", version = 0.1, changes = "2024-05-13 Created Class stub")]
-    [History("Bob", version = 0.2, changes = "2025-05-13 Added Func() Method")]
-    class MyClass
+    class Mallard : Duck 
+    { }
+
+    class Robot
     {
-        public void Func()
-        {
-            Console.WriteLine("Func()");
-        }
+        public void Walk()
+        { Console.WriteLine("Robot.Walk"); }
+
+        public void Swim()
+        { Console.WriteLine("Robot.Swim"); }
+
+        public void Quack()
+        { Console.WriteLine("Robot.Quack"); }
     }
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            Type type = typeof(MyClass);
-            Attribute[] attributes = Attribute.GetCustomAttributes(type);
+            dynamic[] arr = {new Duck(), new Mallard(), new Robot()};
 
-            Console.WriteLine("MyClass change history...");
-
-            foreach(Attribute a in attributes)
+            foreach(dynamic duck in arr)
             {
-                History h = a as History;
-                if (h != null)  
-                    Console.WriteLine("Ver : {0}, Programmer : {1}, Changes : {2}",
-                        h.version, h.GetProgrammer(), h.changes);
+                Console.WriteLine(duck.GetType());
+
+                duck.Walk();
+                duck.Swim();
+                duck.Quack();
+
+                Console.WriteLine();
             }
         }
     }
