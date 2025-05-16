@@ -274,3 +274,16 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/43*
+
+### Day 19
+- dynamic
+	- dynamic 핵심 특징
+	- var 형식 및 object 형식과의 차이점
+	- dynamic이 필요한 이유
+		- 덕 타이핑의 관점
+		- COM과 .NET 사이의 상호 운용성의 관점
+		- 동적 언어와의 상호 운용성의 관점
+	- dynamic 사용의 단점
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/45*
