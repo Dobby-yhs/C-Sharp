@@ -1,77 +1,49 @@
 ﻿using System;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace COMInterop
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
+using IronPython.Hosting;
+
+namespace WithPython
 {
     class MainApp
     {
-        public static void OldWay(string[, ] data, string savePath)
+
+        public static void Main(string[] args)
         {
-            Excel.Application excelApp = new Excel.Application();
+            ScriptEngine engine = Python.CreateEngine();
+            ScriptScope scope = engine.CreateScope();
+            scope.SetVariable("n", "홍길동");
+            scope.SetVariable("p", "010-123-4567");
 
-            excelApp.Workbooks.Add(Type.Missing);
+            // 파이썬 코드에서 클래스 선언
+            ScriptSource source = engine.CreateScriptSourceFromString(
+    @"
+class NameCard :
+    name = ''
+    phone = ''
 
-            Excel.Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
+    def __init__(self, name, phone) :
+        self.name = name
+        self.phone = phone
 
-            for(int i = 0; i < data.GetLength(0); i++)
-            {
-                ((Excel.Range)workSheet.Cells[i + 1, 1]).Value2 = data[i, 0];
-                ((Excel.Range)workSheet.Cells[i + 1, 2]).Value2 = data[i, 1];
-            }
+    def printNameCard(self) :
+        print (self.name + ', ' + self.phone)
 
-            workSheet.SaveAs2(savePath + "\\shpark-book-old.xlsx",
-                Type.Missing,
-                Type.Missing,
-                Type.Missing,
-                Type.Missing,
-                Type.Missing,
-                Type.Missing,
-                Type.Missing,
-                Type.Missing);
+NameCard(n, p)
+");
 
-            excelApp.Quit();
-        }
+            // 파이썬 코드를 실행하여 그 결과를 반환합니다.
+            // NameCard() 생성자를 호출했으니 NameCard 객체가 생성되어 반환됩니다.
+            dynamic result = source.Execute(scope);
+            
+            // result 객체의 메서드를 호출할 수도 있고, 필드에도 접근하는 것이 가능합니다.
+            result.printNameCard();
 
-        public static void NewWay(string[,] data, string savePath)
-        {
-            Excel.Application excelApp = new Excel.Application();
-
-            excelApp.Workbooks.Add();
-
-            Excel.Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
-
-            for (int i = 0; i < data.GetLength(0); i++)
-            {
-                workSheet.Cells[i + 1, 1] = data[i, 0];
-                workSheet.Cells[i + 1, 2] = data[i, 1];
-            }
-
-            workSheet.SaveAs2(savePath + "\\shpark-book-dynamic.xlsx");
-
-            excelApp.Quit();
-        }
-
-        static void Main(string[] args)
-        {
-            string savePath = System.IO.Directory.GetCurrentDirectory();
-            string[,] array = new string[,]
-            {
-                { "좋은날", "2010" },
-                { "밤편지", "2017" },
-                { "팔레트", "2017" },
-                { "Blueming", "2019" },
-                { "에잇", "2020" },
-                { "드라마", "2021" },
-                { "라일락", "2021" },
-                { "홀씨", "2024" },
-                { "Love wins all", "2024" }
-            };
-
-            Console.WriteLine("Creating Excel document in old way...");
-            OldWay(array, savePath);
-
-            Console.WriteLine("Creating Excel document in new way...");
-            NewWay(array, savePath);
+            Console.WriteLine("{0}, {1}", result.name, result.phone);
         }
     }
 }
