@@ -1,39 +1,40 @@
 ﻿using System;
 using System.IO;
-using FS = System.IO.FileStream;  // using 별칭 지시문을 통해 FileStream을 FS로 별칭 등록
+using FS = System.IO.FileStream;
 
-namespace UsingDeclaration
+using static System.Console;
+
+namespace BinaryFile
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            long someValue = 0x123456789ABCDEF0;
-            Console.WriteLine("{0, -1} : 0x{1:X16}", "Original Data", someValue);
-
-            using (Stream outStream = new FS("a.dat", FileMode.Create))
+            using (BinaryWriter bw = new BinaryWriter(new FS("a.dat", FileMode.Create)))
             {
-                byte[] wBytes = BitConverter.GetBytes(someValue);
-
-                Console.Write("{0, -13} : ", "Byte array");
-
-                foreach (byte b in wBytes)
-                    Console.Write("{0:X2} ", b);
-                Console.WriteLine();
-
-                outStream.Write(wBytes, 0, wBytes.Length);
+                // BinaryWriter의 Wirte() 메서드는
+                // C#이 제공하는 모든 기본 데이터 형식에 대해 오버로딩되어 있습니다.
+                bw.Write(int.MaxValue);
+                bw.Write("GoodMoning!");
+                bw.Write(uint.MaxValue);
+                bw.Write("안녕하세요!");
+                bw.Write(double.MaxValue);
             }
+            // bw 스트림은 위의 코드 블록을 통해 닫힙니다.
+            // 만약 코드블록을 따로 지정해두지 않았더라면,
+            // a.dat가 열려있는 상태에서 같은 파일을
+            // 아래에서 다시 열려고 하는 상황이 발생했을 것입니다.
 
-            using Stream inStream = new FS("a.dat", FileMode.Open);
-            byte[] rbytes = new byte[8];
+            using BinaryReader br = new BinaryReader(new FS("a.dat", FileMode.Open));
 
-            int i = 0;
-            while (inStream.Position < inStream.Length)
-                rbytes[i++] = (byte)inStream.ReadByte();
-
-            long readValue = BitConverter.ToInt64(rbytes, 0);
-
-            Console.WriteLine("{0, -13} : 0x{1:X16} ", "Read Data", readValue);
+            // BinaryReader는 읽을 데이터 형식별로
+            // Read데이터형식() 메서드를 제공합니다.
+            WriteLine($"File size : {br.BaseStream.Length} bytes");
+            WriteLine($"{br.ReadInt32()}");
+            WriteLine($"{br.ReadString()}");
+            WriteLine($"{br.ReadUInt32()}");
+            WriteLine($"{br.ReadString()}");
+            WriteLine($"{br.ReadDouble()}");
         }
     }
 }
