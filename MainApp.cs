@@ -1,32 +1,39 @@
 ﻿using System;
 using System.IO;
-using System.Transactions;
+using FS = System.IO.FileStream;  // using 별칭 지시문을 통해 FileStream을 FS로 별칭 등록
 
-namespace BasicIO
+namespace UsingDeclaration
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Stream outStream = new FileStream("a.dat", FileMode.Create);
-            Console.WriteLine($"Position : {outStream.Position}");
+            long someValue = 0x123456789ABCDEF0;
+            Console.WriteLine("{0, -1} : 0x{1:X16}", "Original Data", someValue);
 
-            outStream.WriteByte(0x01);
-            Console.WriteLine($"Position : {outStream.Position}");
+            using (Stream outStream = new FS("a.dat", FileMode.Create))
+            {
+                byte[] wBytes = BitConverter.GetBytes(someValue);
 
-            outStream.WriteByte(0x02);
-            Console.WriteLine($"Position : {outStream.Position}");
+                Console.Write("{0, -13} : ", "Byte array");
 
-            outStream.WriteByte(0x03);
-            Console.WriteLine($"Position : {outStream.Position}");
+                foreach (byte b in wBytes)
+                    Console.Write("{0:X2} ", b);
+                Console.WriteLine();
 
-            outStream.Seek(5, SeekOrigin.Current);
-            Console.WriteLine($"Position : {outStream.Position}");
+                outStream.Write(wBytes, 0, wBytes.Length);
+            }
 
-            outStream.WriteByte(0x04);
-            Console.WriteLine($"Position : {outStream.Position}");
+            using Stream inStream = new FS("a.dat", FileMode.Open);
+            byte[] rbytes = new byte[8];
 
-            outStream.Close();
+            int i = 0;
+            while (inStream.Position < inStream.Length)
+                rbytes[i++] = (byte)inStream.ReadByte();
+
+            long readValue = BitConverter.ToInt64(rbytes, 0);
+
+            Console.WriteLine("{0, -13} : 0x{1:X16} ", "Read Data", readValue);
         }
     }
 }
