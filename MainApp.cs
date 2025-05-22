@@ -1,64 +1,40 @@
 ﻿using System;
 using System.IO;
 
-namespace Touch
+namespace BasicIO
 {
     class MainApp
     {
-        static void OnWrongPathType(string type)
-        {
-            Console.WriteLine($"{type} is wrong type");
-
-            return;
-        }
-
         static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Usage : Touch.exe <Path> [Type:File/Directory]");
+            long someValue = 0x123456789ABCDEF0;
+            Console.WriteLine("{0, -1} : 0x{1:X16}", "Original Data", someValue);
 
-                return;
-            }
+            // 파일 쓰기
+            Stream outStream = new FileStream("a.dat", FileMode.Create);
+            byte[] wBytes = BitConverter.GetBytes(someValue);
 
-            string path = args[0];
-            string type = "File";
+            Console.Write("{0, -13} : ", "Byte array");
 
-            if (args.Length > 1)
-                type = args[1];
+            foreach (byte b in wBytes)
+                Console.Write("{0:X2} ", b);
+            Console.WriteLine();
 
-            if (File.Exists(path) || Directory.Exists(path))
-            {
-                if (type == "File")
-                    File.SetLastWriteTime(path, DateTime.Now);
-                else if (type == "Directory")
-                    Directory.SetLastWriteTime(path, DateTime.Now);
-                else
-                {
-                    OnWrongPathType(path);
+            outStream.Write(wBytes, 0, wBytes.Length);
+            outStream.Close();
 
-                    return;
-                }
+            // 파일 읽기
+            Stream inStream = new FileStream("a.dat", FileMode.Open);
+            byte[] rbytes = new byte[8];
 
-                Console.WriteLine($"Updated {path} {type}");
-            }
-            else
-            {
-                {
-                    if (type == "File")
-                        File.Create(path).Close();
-                    else if (type == "Directory")
-                        Directory.CreateDirectory(path);
-                    else
-                    {
-                        OnWrongPathType(path);
+            int i = 0;
+            while (inStream.Position < inStream.Length)
+                rbytes[i++] = (byte)inStream.ReadByte();
 
-                        return;
-                    }
+            long readValue = BitConverter.ToInt64(rbytes, 0);
 
-                    Console.WriteLine($"Created {path} {type}");
-                }
-            }
+            Console.WriteLine("{0, -13} : 0x{1:X16} ", "Read Data", readValue);
+            inStream.Close();
         }
     }
 }
