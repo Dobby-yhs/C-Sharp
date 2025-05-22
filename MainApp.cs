@@ -2,34 +2,58 @@
 using System.IO;
 using FS = System.IO.FileStream;
 
-namespace TextFile
+
+namespace ManualBinarySerialization
 {
+    class NameCard
+    {
+        public string Name;
+        public string Phone;
+        public int Age;
+
+        public int HaveMoney;
+
+        public NameCard() { }
+
+        public NameCard(string name, string phone, int age)
+        {
+            Name = name;
+            Phone = phone;
+            Age = age;
+        }
+    }
+
     class MainApp
     {
         static void Main(string[] args)
         {
-            using (StreamWriter sw = new StreamWriter(new FS("a.txt", FileMode.Create)))
+            string binaryFilePath = "a.dat";
+
+            NameCard originalNc = new NameCard("홍길동", "010-123-4567", 33);
+
+            using (Stream fs = new FS(binaryFilePath, FileMode.Create))
+            using (BinaryWriter bw = new BinaryWriter(fs))
             {
-                // Write()와 WriteLine() 메서드는
-                // C#이 제공하는 모든 기본 데이터 형식에 대해 오버로딩되어 있습니다.
-                sw.Write("Stream Write And Read");
-                sw.WriteLine();
-                sw.WriteLine(int.MaxValue);
-                sw.WriteLine("GoodMoning!");
-                sw.WriteLine(uint.MaxValue);
-                sw.WriteLine("안녕하세요!");
-                sw.WriteLine(double.MaxValue);
+                bw.Write(originalNc.Name);
+                bw.Write(originalNc.Phone);
+                bw.Write(originalNc.Age);
+
+                Console.WriteLine($"'{binaryFilePath}'에 이진 직렬화 완료.");
             }
 
-            using StreamReader sr = new StreamReader(new FS("a.txt", FileMode.Open));
+            using (Stream fs = new FS(binaryFilePath, FileMode.Open))
+            using (BinaryReader br = new BinaryReader(fs))
             {
-                Console.WriteLine($"File size : {sr.BaseStream.Length} bytes");
+                NameCard deserializedNc = new NameCard();
 
-                // EndOfStream 프로퍼티는 스트림의 끝에 도달했는지를 알려줍니다.
-                while (sr.EndOfStream == false)
-                {
-                    Console.WriteLine(sr.ReadLine());
-                }
+                deserializedNc.Name = br.ReadString();
+                deserializedNc.Phone = br.ReadString();
+                deserializedNc.Age = br.ReadInt32();
+
+                Console.WriteLine($"'{binaryFilePath}'에서 이진 역직렬화 완료.");
+                Console.WriteLine($"Name : {deserializedNc.Name}");
+                Console.WriteLine($"Phone : {deserializedNc.Phone}");
+                Console.WriteLine($"Age : {deserializedNc.Age}");
             }
         }
     }
