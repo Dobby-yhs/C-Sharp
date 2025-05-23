@@ -1,40 +1,50 @@
 ﻿using System;
 using System.Threading;
 
-namespace InterruptingThread
+namespace Synchronize
 {
-    class SideTask
+    class Counter
     {
-        int count;
+        const int LOOP_COUNT = 1000;
 
-        public SideTask(int count)
+        readonly object thisLock;
+
+        private int count;
+        public int Count
         {
-            this.count = count;
+            get { return count; }
         }
 
-        public void KeepAlive()
+        public Counter()
         {
-            try
-            {
-                Console.WriteLine("Running thread isn't gonna be interrupted");
-                Thread.SpinWait(1000000000);
+            thisLock = new object();
+            count = 0;
+        }
 
-                while (count > 0)
+        public void Increase()
+        {
+            int loopCount = LOOP_COUNT;
+
+            while(loopCount-- > 0)
+            {
+                lock (thisLock)
                 {
-                    Console.WriteLine($"{count--} left");
-
-                    Console.WriteLine("Entering into WaitJoinSleep State...");
-                    Thread.Sleep(10);
+                    count++;
                 }
-                Console.WriteLine("Count : 0");
+                Thread.Sleep(1);
             }
-            catch (ThreadInterruptedException e)
+        }
+
+        public void Decrease()
+        {
+            int loopCount = LOOP_COUNT;
+            while (loopCount-- > 0)
             {
-                Console.WriteLine(e);
-            }
-            finally
-            {
-                Console.WriteLine("Clearing resource...");
+                lock (thisLock)
+                {
+                    count--;
+                }
+                Thread.Sleep(1);
             }
         }
     }
@@ -43,22 +53,18 @@ namespace InterruptingThread
     {
         static void Main(string[] args)
         {
-            SideTask task = new SideTask(100);
-            Thread t1 = new Thread(new ThreadStart(task.KeepAlive));
-            t1.IsBackground = false;
+            Counter counter = new Counter();
 
-            Console.WriteLine("Starting thread...");
-            t1.Start();
+            Thread incThread = new Thread(new ThreadStart(counter.Increase));
+            Thread decThread = new Thread(new ThreadStart(counter.Decrease));
 
-            Thread.Sleep(100);
+            incThread.Start();
+            decThread.Start();
 
-            Console.WriteLine("Interrupting thread...");
-            t1.Interrupt();
+            incThread.Join();
+            decThread.Join();
 
-            Console.WriteLine("Wating until thread stops...");
-            t1.Join();
-
-            Console.WriteLine("Finished");
+            Console.WriteLine(counter.Count);
         }
     }
 }
