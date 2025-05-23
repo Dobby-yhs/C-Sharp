@@ -287,3 +287,23 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/45*
+
+### Day 20
+- 파일 정보와 디렉터리 정보 다루기
+	- 파일과 디렉터리 정보를 다루는 클래스
+	- 각 클래스의 주요 메서드와 프로퍼티
+- 스트림
+	- 순차 접근 방식
+	- 임의 접근 방식
+- System.IO.Stream 클래스
+	- FileStream 클래스의 인스턴스 생성
+	- FileStream 클래스의 파일 쓰기
+	- FileStream 클래스의 파일 읽기
+		- Seek() 메서드
+- using 선언 
+- BinaryWriter / BinaryReader
+- SystemWriter / SystemReader
+- 객체 직렬화
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/51*
