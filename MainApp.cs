@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Synchronize
+namespace UsingMonitor
 {
     class Counter
     {
@@ -27,9 +27,14 @@ namespace Synchronize
 
             while(loopCount-- > 0)
             {
-                lock (thisLock)
+                Monitor.Enter(thisLock);
+                try
                 {
                     count++;
+                }
+                finally
+                {
+                    Monitor.Exit(thisLock);
                 }
                 Thread.Sleep(1);
             }
@@ -40,9 +45,14 @@ namespace Synchronize
             int loopCount = LOOP_COUNT;
             while (loopCount-- > 0)
             {
-                lock (thisLock)
+                Monitor.Enter(thisLock);
+                try
                 {
                     count--;
+                }
+                finally
+                {
+                    Monitor.Exit(thisLock);
                 }
                 Thread.Sleep(1);
             }
