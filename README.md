@@ -307,3 +307,26 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/51*
+
+### Day 21
+- 프로세스와 스레드
+	- 멀티 스레드를 이용할 때의 장,단점
+- 스레드 구현
+	- System.Threading.Tread.Start() 메서드
+	- System.Threading.Tread.Join() 메서드
+- 스레드 임의 종료 : Abort() 메서드
+- 스레드의 일생과 상태 변화
+	- ThreadState 열거형 : 스레드의 상태
+	- Flags Attribute
+- 스레드 임의 종료 : Interrupt() 메서드
+- 스레드 동기화
+	- 스레드 동기화의 역할
+	- lock 키워드로 동기화
+		- lock 키워드의 성능 저하
+		- lock 키워드 사용 시 주의할 점
+	- Monitor 클래스로 동기화
+		- 저수준 동기화 : Monitor.Wait() & Monitor.Pulse()
+		- Monitor.Wait()와 Monitor.Pulse()의 사용 패턴
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/53*
