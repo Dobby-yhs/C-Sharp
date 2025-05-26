@@ -330,3 +330,22 @@
 
 > My Blog Link
 >   > *https://sunlight-dby.tistory.com/53*
+
+### Day 21
+- 태스크
+	- 비동기 프로그래밍
+	- Task 클래스의 생성자
+	- Task 인스턴스 실행
+- Task<TResult> 클래스
+	- 선언 방식
+	- 주요 속성과 메서드
+- Parallel 클래스
+	- 주요 메서드
+	- 특징
+- async 한정자와 await 연산자
+- .NET이 제공하는 비동기 API
+	- ReadAsync 메서드
+	- WriteAsync 메서드
+
+> My Blog Link
+>   > *https://sunlight-dby.tistory.com/55*
