@@ -1,54 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace ParallelLoop
+namespace Async
 {
     class MainApp
     {
-        static bool IsPrime(long number)
+        async static private void MyMethodAsync(int count)
         {
-            if (number < 2)
-                return false;
-            if (number % 2 == 0 && number != 2)
-                return false;
+            Console.WriteLine("C");
+            Console.WriteLine("D");
 
-            for (long i = 2; i < number; i++)
+            await Task.Run(async () =>
             {
-                if (number % i == 0)
-                    return false;
-            }
+                for (int i = 1; i <= count; i++)
+                {
+                    Console.WriteLine($"{i} / {count} ...");
+                    await Task.Delay(100);
+                }
+            });
 
-            return true;
+            Console.WriteLine("G");
+            Console.WriteLine("H");
+        }
+
+        static void Caller()
+        {
+            Console.WriteLine("A");
+            Console.WriteLine("B");
+
+            MyMethodAsync(3);
+
+            Console.WriteLine("E");
+            Console.WriteLine("F");
         }
 
         static void Main(string[] args)
         {
-            long from = Convert.ToInt64(args[0]);
-            long to = Convert.ToInt64(args[1]);
+            Caller();
 
-            Console.WriteLine("Please press enter to start...");
-            Console.ReadLine();
-            Console.WriteLine("Started...");
-
-            DateTime startTime = DateTime.Now;
-
-            List<long> total = new List<long>();
-
-            Parallel.For(from, to, (long i) =>
-            {
-                if (IsPrime(i))
-                    lock (total)
-                        total.Add(i);
-            });
-
-            DateTime endTime = DateTime.Now;
-
-            TimeSpan elapsed = endTime - startTime;
-
-            Console.WriteLine("Prime number count between {0} and {1} : {2}", from, to, total.Count);
-            Console.WriteLine("Elapsed time : {0}", elapsed);
+            Console.ReadLine();  // 프로그램 종료 방지
         }
     }
 }
