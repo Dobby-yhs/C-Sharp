@@ -1,48 +1,87 @@
 ﻿using System;
-using System.IO;
-using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace UsingTask
+namespace TaskResult
 {
     class MainApp
     {
+        static bool IsPrime(long number)
+        {
+            if (number < 2)
+                return false;
+            if (number % 2 == 0 && number != 2)
+                return false;
+
+            for (long i = 2; i < number; i++)
+            {
+                if (number % i == 0)
+                    return false;
+            }
+
+            return true;
+        }
+
         static void Main(string[] args)
         {
-            string srcFile = args[0];
+            long from = Convert.ToInt64(args[0]);
+            long to = Convert.ToInt64(args[1]);
+            int taskCount = Convert.ToInt32(args[2]);
 
-            // 파라미터를 전달하는 Action 대리자를 사용
-            Action<object> FileCopyAction = (object state) =>
+            Func<object, List<long>> FindPrimeFunc =
+                (objRange) =>
+                {
+                    long[] range = (long[])objRange;
+                    List<long> found = new List<long>();
+
+                    for (long i = range[0]; i < range[1]; i++)
+                    {
+                        if (IsPrime(i))
+                            found.Add(i);
+                    }
+
+                    return found;
+                };
+
+            Task<List<long>>[] tasks = new Task<List<long>>[taskCount];
+            long currentFrom = from;
+            long currentTo = to / tasks.Length;
+
+            for (int i = 0; i <tasks.Length; i++)
             {
-                string[] paths = (String[])state;
-                File.Copy(paths[0], paths[1]);
+                Console.WriteLine("Task[{0}] : {1} ~ {2}", i, currentFrom, currentTo);
 
-                Console.WriteLine("TaskID : {0}, ThreadId : {1}, {2} was copied to {3}",
-                    Task.CurrentId, Thread.CurrentThread.ManagedThreadId, paths[0], paths[1]);
-            };
+                tasks[i] = new Task<List<long>>(FindPrimeFunc, new long[] {currentFrom, currentTo});
 
-            // 비동기로 파일 복사를 수행하는 Task 생성
-            Task t1 = new Task(
-                FileCopyAction, new string[] { srcFile, srcFile + ".copy1" });
+                if (i == tasks.Length - 2)
+                    currentTo = to;
+                else
+                    currentTo = currentTo + (to / tasks.Length);
+            }
 
-            // 비동기로 파일 복사를 수행하는 Task 생성 및 실행
-            Task t2 = Task.Run(() =>
+            Console.WriteLine("Please press enter to start...");
+            Console.ReadLine();
+            Console.WriteLine("Started...");
+
+            DateTime startTime = DateTime.Now;
+
+            foreach (Task<List<long>> task in tasks)
+                task.Start();
+
+            List<long> total = new List<long>();
+
+            foreach (Task<List<long>> task in tasks)
             {
-                FileCopyAction(new string[] { srcFile, srcFile + ".copy2" });
-            });
+                task.Wait();
+                total.AddRange(task.Result.ToArray());
+            }
 
-            t1.Start();
+            DateTime endTime = DateTime.Now;
 
-            // 동기로 파일 복사를 수행하는 Task 생성
-            Task t3 = new Task(
-                FileCopyAction, new string[] { srcFile, srcFile + ".copy3" });
+            TimeSpan elapsed = endTime - startTime;
 
-            // 동기 실행을 위한 RunSynchronously() 메서드
-            t3.RunSynchronously();
-
-            t1.Wait();
-            t2.Wait();
-            t3.Wait();
+            Console.WriteLine("Prime number count between {0} and {1} : {2}", from, to, total.Count);
+            Console.WriteLine("Elapsed time : {0}", elapsed);
         }
     }
 }
