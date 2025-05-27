@@ -2,7 +2,7 @@
 
 ### Day 1
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 컴파일러와 인터프리터
 - using static
@@ -19,7 +19,7 @@
 
 ### Day 2
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 변수
 - 힙 메모리 영역
@@ -37,7 +37,7 @@
 
 ### Day 3
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 형 변환(타입 캐스팅)
 - 형 변환
@@ -61,7 +61,7 @@
 
 ### Day 4
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 삼항 연산자
 - null 조건부 연산자
@@ -76,7 +76,7 @@
 
 ### Day 5
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - Switch
 	- Switch문(Statement)
@@ -91,7 +91,7 @@
 
 ### Day 6
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 메소드
 - 매개변수
@@ -113,7 +113,7 @@
 
 ### Day 7
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 객체지향 프로그래밍 (OOP)
 	- 객체
@@ -138,7 +138,7 @@
 
 ### Day 8
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 접근 한정자 : 은닉성
 - 상속
@@ -163,7 +163,7 @@
 
 ### Day 9
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 구조체
 	- 클래스 vs 구조체
@@ -180,7 +180,7 @@
 
 ### Day 10
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 인터페이스
 - 인터페이스 다중 상속
@@ -195,7 +195,7 @@
 
 ### Day 11
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 프로퍼티
 - 자동 구현 프로퍼티
@@ -217,7 +217,7 @@
 
 ### Day 12
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 배열
 	- System.Index & ^연산자
@@ -244,7 +244,7 @@
 
 ### Day 13
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 컬렉션
 	- ArrayList
@@ -267,7 +267,7 @@
 
 ### Day 14
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 일반화 프로그래밍
 	- 일반화 메서드
@@ -287,7 +287,7 @@
 
 ### Day 15
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 예외 처리
 - try ~ catch
@@ -305,7 +305,7 @@
 
 ### Day 16
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 대리자
 	- 대리자의 사용
@@ -322,7 +322,7 @@
 
 ### Day 17
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 람다식
 	- 문 형식의 람다식
@@ -352,7 +352,7 @@
 
 ### Day 18
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 리플렉션
 	- Object.GetType() 메서드와 Type 클래스
@@ -369,7 +369,7 @@
 
 ### Day 19
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - dynamic
 	- dynamic 핵심 특징
@@ -387,7 +387,7 @@
 
 ### Day 20
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 파일 정보와 디렉터리 정보 다루기
 	- 파일과 디렉터리 정보를 다루는 클래스
@@ -412,7 +412,7 @@
 
 ### Day 21
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 프로세스와 스레드
 	- 멀티 스레드를 이용할 때의 장,단점
@@ -440,7 +440,7 @@
 
 ### Day 22
 <details>
-	<summary>공부 내용</summary>
+	<summary><b>공부 내용</b></summary>
 	
 - 태스크
 	- 비동기 프로그래밍
