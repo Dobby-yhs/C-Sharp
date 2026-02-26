@@ -467,3 +467,6 @@
 
 ### Algorithm - Doubly Linked List
 - 양방향 링크드 리스트의 AddLast, Remove 구현
+
+### Maze Algorithm - Generate By BinaryTree
+- BinaryTree를 활용한 미로 생성 알고리즘
