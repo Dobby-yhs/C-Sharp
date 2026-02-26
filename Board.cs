@@ -2,6 +2,7 @@
 
 namespace CSharp
 {
+    // 동적 배열 구현
     class MyList<T>
     {
         const int DEFAULT_SIZE = 1;

@@ -36,6 +36,7 @@ namespace CSharp
                 // 렌더링
                 Console.SetCursorPosition(0, 0);  // Cursor 위치 조정
 
+                // 추후 따로 관리 예정
                 for (int i = 0; i < 25; i++)
                 {
                     for (int j = 0; j < 25; j++)
