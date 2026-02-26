@@ -2,50 +2,51 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AsyncFileIO
+namespace CSharp
 {
     class MainApp
     {
-        static async Task<long> CopyAsync(string FromPath, string ToPath)
-        {
-            using (var fromStream = new FileStream(FromPath, FileMode.Open))
-            {
-                long totalCopied = 0;
-
-                using (var toStream = new FileStream(ToPath, FileMode.Create))
-                {
-                    byte[] buffer = new byte[1024];
-                    int nRead = 0;
-
-                    while ((nRead = await fromStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
-                    {
-                        await toStream.WriteAsync(buffer, 0, nRead);
-                        totalCopied += nRead;
-                    }
-                }
-
-                return totalCopied;
-            }
-        }
-
-        static async void DoCopy(string FromPath, string ToPath)
-        {
-            long totalCopied = await CopyAsync(FromPath, ToPath);
-            Console.WriteLine($"Copied Total {totalCopied} Bytes.");
-        }
-
         static void Main(string[] args)
         {
-            if (args.Length < 2)
+            Board board = new Board();
+            board.Initialize();
+
+            Console.CursorVisible = false;  // Cursor의 Visible 상태
+
+            const int WAIT_TICK = 1000 / 30;
+            const char CIRCLE = '\u25cf';
+
+            int lastTick = 0;
+
+            while (true)
             {
-                Console.WriteLine("Usage : AsyncFileIO <Source> <Destination>");
-                
-                return;
+                #region 프레임 관리
+                int currentTick = System.Environment.TickCount;  // 절대적 시간 개념 x, 시스템이 시작된 이후의 밀리세컨드
+
+                // 만약에 경과한 시간이 1/30초보다 작다면, continue / 1초는 1000밀리 세컨드이기때문에 1000/30으로 계산
+                if (currentTick - lastTick < WAIT_TICK)
+                    continue;
+                lastTick = currentTick;  // 1/30초보다 크면 lastTick을 currentTick으로 변경
+                #endregion
+
+                // 입력
+
+                // 로직
+
+                // 렌더링
+                Console.SetCursorPosition(0, 0);  // Cursor 위치 조정
+
+                for (int i = 0; i < 25; i++)
+                {
+                    for (int j = 0; j < 25; j++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(CIRCLE);
+                        Console.Write(' ');
+                    }
+                    Console.WriteLine();
+                }
             }
-
-            DoCopy(args[0], args[1]);
-
-            Console.ReadLine();
         }
     }
 }
