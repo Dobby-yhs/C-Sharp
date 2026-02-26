@@ -464,3 +464,6 @@
 
 ### Algorithm - Dynamic Array
 - 동적 배열의 Add, Indexer, RemoveAt 구현
+
+### Algorithm - Doubly Linked List
+- 양방향 링크드 리스트의 AddLast, Remove 구현
