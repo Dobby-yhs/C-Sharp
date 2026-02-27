@@ -470,3 +470,6 @@
 
 ### Maze Algorithm - Generate By BinaryTree
 - BinaryTree를 활용한 미로 생성 알고리즘
+
+### Maze Algorithm - Generate By SideWinder
+- SideWinder를 활용한 미로 생성 알고리즘

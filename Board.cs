@@ -23,7 +23,65 @@ namespace CSharp
             _tile = new TileType[size, size];
             _size = size;
 
-            GenerateByBinaryTree();
+            GenerateBySideWinder();
+        }
+
+        void GenerateBySideWinder()
+        {
+
+            // 일단 길을 막아버리는 작업
+            for (int y = 0; y < _size; y++)
+            {
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        _tile[y, x] = TileType.Wall;
+                    else
+                        _tile[y, x] = TileType.Empty;
+                }
+            }
+
+            // 랜덤으로 우측 혹은 아래로 길을 뚫는 작업
+            Random rand = new Random();
+            for (int y = 0; y < _size; y++)
+            {
+                int count = 1;
+
+                for (int x = 0; x < _size; x++)
+                {
+                    if (x % 2 == 0 || y % 2 == 0)
+                        continue;
+
+                    // 외곽에 대한 처리
+                    if (y == _size - 2 && x == _size - 2)
+                        continue;
+
+                    if (y == _size - 2)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        continue;
+                    }
+
+                    if (x == _size - 2)
+                    {
+                        _tile[y + 1, x] = TileType.Empty;
+                        continue;
+                    }
+
+                    // SideWinder Algorithm
+                    if (rand.Next(0, 2) == 0)
+                    {
+                        _tile[y, x + 1] = TileType.Empty;
+                        count++;
+                    }
+                    else
+                    {
+                        int randomIndex = rand.Next(0, count);
+                        _tile[y + 1, x - randomIndex * 2] = TileType.Empty; // x 좌표 하나마다 벽으로 이루어져있기 때문에 2를 곱한 후 randomIndex를 빼준다.
+                        count = 1;
+                    }
+                }
+            }
         }
 
         void GenerateByBinaryTree()
