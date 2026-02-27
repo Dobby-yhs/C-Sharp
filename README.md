@@ -473,3 +473,6 @@
 
 ### Maze Algorithm - Generate By SideWinder
 - SideWinder를 활용한 미로 생성 알고리즘
+
+### Searching Maze Algorithm - Right Weight Method
+- 우수법을 활용한 미로 탐색 알고리즘
