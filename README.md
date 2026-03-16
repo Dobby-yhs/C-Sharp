@@ -479,3 +479,6 @@
 
 ### Stack & Queue Implement
 - 배열 기반 스택, 순환 버퍼 기반 큐 구현
+
+### List Implement
+- 배열 기반 리스트 구현
